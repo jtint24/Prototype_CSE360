@@ -3,7 +3,7 @@ package com.example.prototype_cse360;
 import java.util.ArrayList;
 
 public class ShoppingCart {
-    private static ArrayList<OrderedItem> orderedItems = new ArrayList<>();
+    private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
 
     public static void addItem(OrderedItem oi) {
         orderedItems.add(oi);
