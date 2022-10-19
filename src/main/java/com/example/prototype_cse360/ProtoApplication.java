@@ -11,15 +11,17 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProtoApplication extends Application {
 
     private Stage primaryStage;
 
     private FoodItem[] foodItems = {
-            new FoodItem("Pepperoni Pizza", new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfaA0ZWjkuzaSgO1BiLemMVp58QxGbBxzew&usqp=CAU"), 5.99),
-            new FoodItem("Cheese Pizza", new Image("https://images.contentstack.io/v3/assets/bltbb619fd5c667ba2d/blt2d4e43bcebe1548e/60ca60fa1e0505677a881227/Cheese_Pizza.jpg"), 4.99),
-            new FoodItem("Pineapple Pizza", new Image("https://www.kayscleaneats.com/wp-content/uploads/2020/07/unadjustednonraw_thumb_a8b0.jpg"), 5.49),
+            new FoodItem("Pepperoni Pizza", 5.99, FoodItem.Category.PIZZA, new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfaA0ZWjkuzaSgO1BiLemMVp58QxGbBxzew&usqp=CAU")),
+            new FoodItem("Cheese Pizza", 4.99, FoodItem.Category.PIZZA, new Image("https://images.contentstack.io/v3/assets/bltbb619fd5c667ba2d/blt2d4e43bcebe1548e/60ca60fa1e0505677a881227/Cheese_Pizza.jpg")),
+            new FoodItem("Pineapple Pizza", 5.49, FoodItem.Category.PIZZA, new Image("https://www.kayscleaneats.com/wp-content/uploads/2020/07/unadjustednonraw_thumb_a8b0.jpg")),
     };
 
     @Override
@@ -56,12 +58,23 @@ public class ProtoApplication extends Application {
 
     private Scene chefScene() { return new Scene(new Label("chefScene"));}
     private Scene customerScene() {
-        HBox retBox = new HBox();
-        for (FoodItem foodItem : foodItems) {
-            retBox.getChildren().add(foodItem.graphicButton());
+        HashMap<FoodItem.Category,HBox> categories = new HashMap<>();
+        VBox retBox = new VBox();
+
+        for (FoodItem.Category category : FoodItem.Category.values()) {
+            categories.put(category, new HBox());
         }
-        retBox.setSpacing(30);
-        retBox.setPadding(new Insets(30));
+        for (FoodItem foodItem : foodItems) {
+            categories.get(foodItem.getCategory()).getChildren().add(foodItem.graphicButton());
+        }
+        for (Map.Entry<FoodItem.Category, HBox> categoryHBoxEntry : categories.entrySet()) {
+            HBox hbox = categoryHBoxEntry.getValue();
+            hbox.setSpacing(30);
+            hbox.setPadding(new Insets(30));
+
+            retBox.getChildren().addAll(new Label(categoryHBoxEntry.getKey().toString()), hbox);
+        }
+
         return new Scene(retBox);
     }
     private Scene orderManagerScene() {return new Scene(new Label("orderManagerScene"));}

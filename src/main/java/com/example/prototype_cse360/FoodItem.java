@@ -6,19 +6,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 public class FoodItem {
     private final String name;
     private final Image image;
     private final double price;
+    private final Category category;
 
-    FoodItem(String _name, Image _image, double _price) {
+    FoodItem(String _name, double _price, Category _category, Image _image) {
         name = _name;
-        image = _image;
         price = _price;
+        category = _category;
+        image = _image;
     }
 
     public Node graphic() {
@@ -46,8 +46,14 @@ public class FoodItem {
         return retButton;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     @Override
     public String toString() {
         return name+" "+price+"\n";
     }
+
+    public enum Category {PIZZA, SALAD, WINGS, DRINKS, DESERT}
 }
