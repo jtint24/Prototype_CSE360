@@ -2,6 +2,7 @@ package com.example.prototype_cse360;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,14 +23,21 @@ public class FoodItem {
 
     public Node graphic() {
         VBox retBox = new VBox();
+
         ImageView foodImageView = new ImageView(image);
         foodImageView.setFitHeight(100);
         foodImageView.setFitWidth(100);
+
         retBox.getChildren().addAll(foodImageView, new Label(name+"   "+price));
         retBox.setStyle("-fx-background-color: #FFFFFF;");
         retBox.setPadding(new Insets(10));
         retBox.setSpacing(10);
 
         return retBox;
+    }
+
+    public Button graphicButton() {
+        Button retButton = new Button("",graphic());
+        return retButton;
     }
 }

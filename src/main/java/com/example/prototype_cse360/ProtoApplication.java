@@ -17,7 +17,7 @@ public class ProtoApplication extends Application {
     private Stage primaryStage;
 
     private FoodItem[] foodItems = {
-            new FoodItem("Pepperoni Pizza", new Image("https://modpizza.com/wp-content/uploads/2021/12/Website-Maddy.png"), 5.99),
+            new FoodItem("Pepperoni Pizza", new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfaA0ZWjkuzaSgO1BiLemMVp58QxGbBxzew&usqp=CAU"), 5.99),
             new FoodItem("Cheese Pizza", new Image("https://images.contentstack.io/v3/assets/bltbb619fd5c667ba2d/blt2d4e43bcebe1548e/60ca60fa1e0505677a881227/Cheese_Pizza.jpg"), 4.99),
             new FoodItem("Pineapple Pizza", new Image("https://www.kayscleaneats.com/wp-content/uploads/2020/07/unadjustednonraw_thumb_a8b0.jpg"), 5.49),
     };
@@ -58,7 +58,7 @@ public class ProtoApplication extends Application {
     private Scene customerScene() {
         HBox retBox = new HBox();
         for (FoodItem foodItem : foodItems) {
-            retBox.getChildren().add(foodItem.graphic());
+            retBox.getChildren().add(foodItem.graphicButton());
         }
         retBox.setSpacing(30);
         retBox.setPadding(new Insets(30));
