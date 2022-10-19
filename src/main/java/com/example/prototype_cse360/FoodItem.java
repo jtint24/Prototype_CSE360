@@ -38,6 +38,16 @@ public class FoodItem {
 
     public Button graphicButton() {
         Button retButton = new Button("",graphic());
+
+        retButton.setOnAction(actionEvent -> {
+            ShoppingCart.addItem(new OrderedItem(this));
+        });
+
         return retButton;
+    }
+
+    @Override
+    public String toString() {
+        return name+" "+price+"\n";
     }
 }

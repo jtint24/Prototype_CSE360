@@ -12,4 +12,9 @@ public class OrderedItem {
     OrderedItem(FoodItem _item) {
         item = _item;
     }
+
+    @Override
+    public String toString() {
+        return item.toString();
+    }
 }
