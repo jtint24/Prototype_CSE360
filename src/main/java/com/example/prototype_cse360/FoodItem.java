@@ -67,5 +67,5 @@ public class FoodItem {
         return name+" "+price+"\n";
     }
 
-    public enum Category {PIZZA, SALAD, WINGS, DRINKS, DESERT}
+    public enum Category {PIZZA, SALAD, WINGS, DRINKS, DESSERT}
 }
