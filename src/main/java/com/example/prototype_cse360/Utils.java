@@ -47,6 +47,15 @@ public class Utils {
                         new RadioMods(new String[]{"6 pc", "8 pc", "10 pc"}, new double[] {0, 1.00, 2.00}, 1)
                 ),
                 new FoodItem("Cookie", 1.99, FoodItem.Category.DESSERT, new Image("https://envato-shoebox-0.imgix.net/5f6b/069d-c501-41cc-a5e8-09067132b96d/IMG_0440-Edit_20161019.jpg?auto=compress%2Cformat&fit=max&mark=https%3A%2F%2Felements-assets.envato.com%2Fstatic%2Fwatermark2.png&markalign=center%2Cmiddle&markalpha=18&w=700&s=662a7a310abacd265c4218db27d9ebab")),
+                new FoodItem("Coca-Cola", .99, FoodItem.Category.DRINKS, new Image("https://res.cloudinary.com/fleetnation/image/private/c_fit,w_1120/g_south,l_text:style_gothic2:%C2%A9%20urbanbuzz,o_20,y_10/g_center,l_watermark4,o_25,y_50/v1434359372/iwqhwkmtyo2cquilmjbm.jpg"),
+                        new RadioMods(new String[]{"Small", "Medium", "Large"}, new double[] {0, .50, .75}, 1)
+                ),
+                new FoodItem("Sprite", .99, FoodItem.Category.DRINKS, new Image("https://media.istockphoto.com/photos/sprite-can-on-an-isolated-white-background-picture-id458556265?k=20&m=458556265&s=170667a&w=0&h=Eabx51DYMfH7QA5sV_YmQnPGbA721l7b0Udugm_kGQw="),
+                        new RadioMods(new String[]{"Small", "Medium", "Large"}, new double[] {0, .50, .75}, 1)
+                ),
+                new FoodItem("Dr. Pepper", .99, FoodItem.Category.DRINKS, new Image("https://thumbs.dreamstime.com/b/dr-pepper-novyy-urengoy-russia-march-aluminium-can-isolated-over-white-background-177812013.jpg"),
+                        new RadioMods(new String[]{"Small", "Medium", "Large"}, new double[] {0, .50, .75}, 1)
+                ),
         };
     }
 }
