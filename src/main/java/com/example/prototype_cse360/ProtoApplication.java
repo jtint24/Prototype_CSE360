@@ -123,6 +123,7 @@ public class ProtoApplication extends Application {
         return new Scene(availBox);
     }
     private Scene cartScene() {
+        ShoppingCart.updateReceiptGraphic();
         VBox mainBox = new VBox();
         mainBox.getChildren().add(ShoppingCart.receiptGraphic());
         return new Scene(mainBox);

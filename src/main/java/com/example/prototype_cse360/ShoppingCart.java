@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class ShoppingCart {
     private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
+    private static VBox receiptGraphic = new VBox();
 
     public static void addItem(OrderedItem oi) {
         orderedItems.add(oi);
@@ -15,6 +16,8 @@ public class ShoppingCart {
 
     public static void removeItem(OrderedItem oi) {
         orderedItems.remove(oi);
+        updateReceiptGraphic();
+        //System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
     }
 
     public static ArrayList<OrderedItem> getOrderedItems() {
@@ -22,11 +25,14 @@ public class ShoppingCart {
     }
 
     public static Node receiptGraphic() {
-        VBox receipt = new VBox();
+        return receiptGraphic;
+    }
+
+    public static void updateReceiptGraphic() {
+        receiptGraphic.getChildren().removeIf(node -> true);
         for (OrderedItem orderedItem : orderedItems) {
-            receipt.getChildren().add(orderedItem.receiptGraphic());
+            receiptGraphic.getChildren().add(orderedItem.receiptGraphic());
         }
-        return receipt;
     }
 
 }
