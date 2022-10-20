@@ -30,6 +30,10 @@ public class RadioMods extends FoodMod {
                 option.setSelected(true);
                 option.requestFocus();
             }
+            int finalI = i;
+            option.setOnAction(actionEvent -> {
+                currentSelection = finalI;
+            });
             retBox.getChildren().add(new HBox(Utils.Spacer(),option));
         }
 

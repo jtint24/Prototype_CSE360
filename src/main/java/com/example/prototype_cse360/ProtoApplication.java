@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -36,6 +37,8 @@ public class ProtoApplication extends Application {
         Scene mainScene = new Scene(mainPicker());
         primaryStage.setTitle("CSE 360 Prototype");
         primaryStage.setScene(mainScene);
+        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(400);
         primaryStage.show();
     }
 
@@ -95,15 +98,32 @@ public class ProtoApplication extends Application {
     private Scene modifierScene() {
         VBox availBox = new VBox();
 
+        Label headerLabel = new Label("Make Customizations!");
+        headerLabel.setTextAlignment(TextAlignment.CENTER);
+
+        availBox.getChildren().add(headerLabel);
+
         for (OrderedItem orderedItem : ShoppingCart.getOrderedItems() ) {
             availBox.getChildren().add(orderedItem.modifiersGraphic());
         }
 
         availBox.setSpacing(20);
 
+        HBox bottomNavigation = new HBox();
+        Button nextButton = new Button("Next");
+        nextButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
+        Button prevButton = new Button("Back");
+        prevButton.setOnAction(event -> {primaryStage.setScene(customerScene());});
+
+        bottomNavigation.getChildren().addAll(prevButton, Utils.Spacer(), Utils.Spacer(), nextButton);
+        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+
+        availBox.getChildren().add(bottomNavigation);
+
         return new Scene(availBox);
     }
     private Scene cartScene() {
+
         return new Scene(new Label(""));
     }
     private Scene paymentScene() {

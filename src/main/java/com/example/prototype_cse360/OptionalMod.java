@@ -18,7 +18,7 @@ public class OptionalMod extends FoodMod {
         CheckBox activeBox = new CheckBox();
         activeBox.setOnAction(actionEvent -> {inEffect = !inEffect;});
 
-        retBox.getChildren().addAll(Utils.Spacer(), activeBox, Utils.Spacer(), new Label(super.name), Utils.Spacer(), new Label(""+priceDifference));
+        retBox.getChildren().addAll(Utils.Spacer(), activeBox, new Label(super.name), Utils.Spacer(), new Label(""+priceDifference));
         return retBox;
     }
 
