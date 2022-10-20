@@ -12,7 +12,6 @@ public class RadioMods extends FoodMod {
     int currentSelection;
 
     RadioMods(String[] _optionNames, double[] _optionPriceDiffs, int _currentSelection) {
-        super(_optionNames[_currentSelection], _optionPriceDiffs[_currentSelection]);
         optionNames = _optionNames;
         optionPriceDiffs = _optionPriceDiffs;
         currentSelection = _currentSelection;
@@ -38,5 +37,20 @@ public class RadioMods extends FoodMod {
         }
 
         return retBox;
+    }
+
+    @Override
+    public boolean isInEffect() {
+        return true;
+    }
+
+    @Override
+    public double getPriceDifference() {
+        return optionPriceDiffs[currentSelection];
+    }
+
+    @Override
+    public String getName() {
+        return optionNames[currentSelection];
     }
 }

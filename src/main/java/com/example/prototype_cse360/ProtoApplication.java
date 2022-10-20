@@ -123,12 +123,14 @@ public class ProtoApplication extends Application {
         return new Scene(availBox);
     }
     private Scene cartScene() {
-
-        return new Scene(new Label(""));
+        VBox mainBox = new VBox();
+        mainBox.getChildren().add(ShoppingCart.receiptGraphic());
+        return new Scene(mainBox);
     }
     private Scene paymentScene() {
-        return new Scene(new Label(""));
-
+        VBox mainBox = new VBox();
+        mainBox.getChildren().add(ShoppingCart.receiptGraphic());
+        return new Scene(mainBox);
     }
     private Scene okScene() {
         return new Scene(new Label(""));
