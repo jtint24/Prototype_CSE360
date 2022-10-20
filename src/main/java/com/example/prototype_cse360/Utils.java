@@ -6,7 +6,7 @@ import javafx.scene.layout.Region;
 public class Utils {
     public static Region Spacer() {
         Region retRegion = new Region();
-        retRegion.setPadding(new Insets(30));
+        //retRegion.setPadding(new Insets(30));
         retRegion.setPrefWidth(30);
         return retRegion;
     }

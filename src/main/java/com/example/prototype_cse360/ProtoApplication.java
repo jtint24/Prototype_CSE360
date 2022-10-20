@@ -3,6 +3,7 @@ package com.example.prototype_cse360;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +20,11 @@ public class ProtoApplication extends Application {
     private Stage primaryStage;
 
     private FoodItem[] foodItems = {
-            new FoodItem("Pepperoni Pizza", 5.99, FoodItem.Category.PIZZA, new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfaA0ZWjkuzaSgO1BiLemMVp58QxGbBxzew&usqp=CAU")),
+            new FoodItem("Pepperoni Pizza", 5.99, FoodItem.Category.PIZZA, new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfaA0ZWjkuzaSgO1BiLemMVp58QxGbBxzew&usqp=CAU"),
+                    new OptionalMod("Extra Sauce", 1.00),
+                    new OptionalMod("Extra Cheese", 1.00),
+                    new RadioMods(new String[]{"Small", "Medium", "Large"}, new double[] {0, 1.00, 2.00}, 1)
+            ),
             new FoodItem("Cheese Pizza", 4.99, FoodItem.Category.PIZZA, new Image("https://images.contentstack.io/v3/assets/bltbb619fd5c667ba2d/blt2d4e43bcebe1548e/60ca60fa1e0505677a881227/Cheese_Pizza.jpg")),
             new FoodItem("Pineapple Pizza", 5.49, FoodItem.Category.PIZZA, new Image("https://www.kayscleaneats.com/wp-content/uploads/2020/07/unadjustednonraw_thumb_a8b0.jpg")),
     };
@@ -93,6 +98,8 @@ public class ProtoApplication extends Application {
         for (OrderedItem orderedItem : ShoppingCart.getOrderedItems() ) {
             availBox.getChildren().add(orderedItem.modifiersGraphic());
         }
+
+        availBox.setSpacing(20);
 
         return new Scene(availBox);
     }
