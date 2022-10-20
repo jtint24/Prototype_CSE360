@@ -9,4 +9,8 @@ public class ShoppingCart {
         orderedItems.add(oi);
         System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
     }
+
+    public static ArrayList<OrderedItem> getOrderedItems() {
+        return orderedItems;
+    }
 }

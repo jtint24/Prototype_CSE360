@@ -2,6 +2,7 @@ package com.example.prototype_cse360;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,7 +13,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 public class ProtoApplication extends Application {
 
@@ -58,25 +58,55 @@ public class ProtoApplication extends Application {
 
     private Scene chefScene() { return new Scene(new Label("chefScene"));}
     private Scene customerScene() {
-        HashMap<FoodItem.Category,HBox> categories = new HashMap<>();
+        HashMap<FoodItem.Category,HBox> sortedHBoxes = new HashMap<>();
         VBox retBox = new VBox();
 
         for (FoodItem.Category category : FoodItem.Category.values()) {
-            categories.put(category, new HBox());
+            sortedHBoxes.put(category, new HBox());
         }
         for (FoodItem foodItem : foodItems) {
-            categories.get(foodItem.getCategory()).getChildren().add(foodItem.graphicButton());
+            sortedHBoxes.get(foodItem.getCategory()).getChildren().add(foodItem.graphicButton());
         }
-        for (Map.Entry<FoodItem.Category, HBox> categoryHBoxEntry : categories.entrySet()) {
-            HBox hbox = categoryHBoxEntry.getValue();
+        for (FoodItem.Category category : FoodItem.Category.values()) {
+            HBox hbox = sortedHBoxes.get(category);
             hbox.setSpacing(30);
             hbox.setPadding(new Insets(30));
 
-            retBox.getChildren().addAll(new Label(categoryHBoxEntry.getKey().toString()), hbox);
+            retBox.getChildren().addAll(new Label(category.toString()), hbox);
         }
+
+        HBox bottomNavigation = new HBox();
+        Button nextButton = new Button("Next");
+        nextButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
+
+        bottomNavigation.getChildren().add(nextButton);
+        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+
+        retBox.getChildren().add(bottomNavigation);
+
 
         return new Scene(retBox);
     }
+    private Scene modifierScene() {
+        VBox availBox = new VBox();
+
+        for (OrderedItem orderedItem : ShoppingCart.getOrderedItems() ) {
+            availBox.getChildren().add(orderedItem.modifiersGraphic());
+        }
+
+        return new Scene(availBox);
+    }
+    private Scene cartScene() {
+        return new Scene(new Label(""));
+    }
+    private Scene paymentScene() {
+        return new Scene(new Label(""));
+
+    }
+    private Scene okScene() {
+        return new Scene(new Label(""));
+    }
+
     private Scene orderManagerScene() {return new Scene(new Label("orderManagerScene"));}
 
 }

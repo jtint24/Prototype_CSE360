@@ -8,17 +8,27 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.lang.reflect.Modifier;
+
 public class FoodItem {
-    private final String name;
-    private final Image image;
-    private final double price;
-    private final Category category;
+     final String name;
+     final Image image;
+     final double price;
+     final Category category;
+     FoodMod[] availableModifiers = new FoodMod[0];
 
     FoodItem(String _name, double _price, Category _category, Image _image) {
         name = _name;
         price = _price;
         category = _category;
         image = _image;
+    }
+    FoodItem(String _name, double _price, Category _category, Image _image, FoodMod... _availableModifiers) {
+        name = _name;
+        price = _price;
+        category = _category;
+        image = _image;
+        availableModifiers = _availableModifiers;
     }
 
     public Node graphic() {
@@ -35,6 +45,8 @@ public class FoodItem {
 
         return retBox;
     }
+
+
 
     public Button graphicButton() {
         Button retButton = new Button("",graphic());
