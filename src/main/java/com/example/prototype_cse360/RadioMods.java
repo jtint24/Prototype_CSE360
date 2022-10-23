@@ -53,4 +53,9 @@ public class RadioMods extends FoodMod {
     public String getName() {
         return optionNames[currentSelection];
     }
+
+    @Override
+    public FoodMod clone() {
+        return new RadioMods(optionNames, optionPriceDiffs, currentSelection);
+    }
 }

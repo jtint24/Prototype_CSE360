@@ -7,7 +7,7 @@ import javafx.scene.Node;
  *
  * represents a modification made to a food item, like a size change,
  * */
-public abstract class FoodMod {
+public abstract class FoodMod implements Cloneable {
 
     abstract Node graphic();
 
@@ -16,4 +16,7 @@ public abstract class FoodMod {
     abstract double getPriceDifference();
 
     abstract String getName();
+
+    @Override
+    public abstract FoodMod clone();
 }

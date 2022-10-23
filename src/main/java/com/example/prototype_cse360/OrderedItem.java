@@ -22,7 +22,10 @@ public class OrderedItem {
 
     OrderedItem(FoodItem _item) {
         item = _item;
-        mods = _item.availableModifiers.clone();
+        mods = new FoodMod[_item.availableModifiers.length];
+        for (int i = 0; i<_item.availableModifiers.length; i++) {
+            mods[i] = _item.availableModifiers[i].clone();
+        }
     }
 
     public Node modifiersGraphic() {

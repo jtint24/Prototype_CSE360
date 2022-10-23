@@ -37,4 +37,9 @@ public class OptionalMod extends FoodMod {
         return name;
     }
 
+    @Override
+    public FoodMod clone() {
+        return new OptionalMod(name, priceDifference);
+    }
+
 }
