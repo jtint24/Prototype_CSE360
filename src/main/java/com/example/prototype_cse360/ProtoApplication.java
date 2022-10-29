@@ -74,6 +74,7 @@ public class ProtoApplication extends Application {
             hbox.setPadding(new Insets(30));
 
             foodItemsBox.getChildren().addAll(new Label(category.toString()), hbox);
+            // adjusting header text , add new object
         }
 
 
