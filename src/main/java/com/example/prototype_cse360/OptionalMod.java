@@ -15,12 +15,20 @@ public class OptionalMod extends FoodMod {
         priceDifference = _priceDifference;
     }
 
+    /**
+     * graphic
+     *
+     * @return The node shown for each individual modifier in the modifiers page, with a toggle letting
+     *         the user select or deselect the mod
+     * */
+
+    @Override
     public Node graphic() {
         HBox retBox = new HBox();
         CheckBox activeBox = new CheckBox();
         activeBox.setOnAction(actionEvent -> {inEffect = !inEffect;});
 
-        retBox.getChildren().addAll(Utils.Spacer(), activeBox, new Label(name), Utils.Spacer(), new Label(""+priceDifference));
+        retBox.getChildren().addAll(Utils.spacer(), activeBox, new Label(name), Utils.spacer(), new Label(""+priceDifference));
         return retBox;
     }
 
@@ -29,10 +37,12 @@ public class OptionalMod extends FoodMod {
         return inEffect;
     }
 
+    @Override
     public double getPriceDifference() {
         return inEffect ? priceDifference : 0;
     }
 
+    @Override
     public String getName() {
         return name;
     }

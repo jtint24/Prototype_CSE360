@@ -21,6 +21,13 @@ public class ProtoApplication extends Application {
 
     private final FoodItem[] foodItems = Utils.getFoodItems();
 
+    /**
+     * start
+     *
+     * The method that runs on the application setup. Sets the stage and inserts primaryScene as the main
+     * scene
+     * */
+
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage;
@@ -37,7 +44,11 @@ public class ProtoApplication extends Application {
         launch();
     }
 
-
+    /**
+     * mainPicker
+     *
+     * @return The picker menu for each of the three different kinds of users
+     * */
     public VBox mainPicker() {
         VBox retBox = new VBox();
         Button chefButton = new Button("Chef");
@@ -55,7 +66,20 @@ public class ProtoApplication extends Application {
         return retBox;
     }
 
+    /**
+     * chefScene
+     *
+     * @return The main scene for the chef
+     * */
+
     private Scene chefScene() { return new Scene(new Label("chefScene"));}
+
+    /**
+     * customerScene
+     *
+     * @return The main scene for the customer, the menu where they can select items
+     * */
+
     private Scene customerScene() {
         HashMap<FoodItem.Category,HBox> sortedHBoxes = new HashMap<>();
         VBox retBox = new VBox();
@@ -91,6 +115,13 @@ public class ProtoApplication extends Application {
 
         return new Scene(retBox);
     }
+
+    /**
+     * modifierScene
+     *
+     * @return The scene where modifiers can be added
+     * */
+
     private Scene modifierScene() {
         VBox availBox = new VBox();
 
@@ -111,13 +142,20 @@ public class ProtoApplication extends Application {
         Button prevButton = new Button("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(customerScene());});
 
-        bottomNavigation.getChildren().addAll(prevButton, Utils.Spacer(), Utils.Spacer(), nextButton);
+        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
 
         availBox.getChildren().add(bottomNavigation);
 
         return new Scene(availBox);
     }
+
+    /**
+     * cartScene
+     *
+     * @return The scene where the customer can change or review the shopping cart
+     * */
+
     private Scene cartScene() {
         ShoppingCart.updateReceiptGraphic();
 
@@ -136,17 +174,24 @@ public class ProtoApplication extends Application {
         Button prevButton = new Button("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
 
-        bottomNavigation.getChildren().addAll(prevButton, Utils.Spacer(), Utils.Spacer(), nextButton);
+        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
 
         mainBox.getChildren().add(bottomNavigation);
 
         return new Scene(mainBox);
     }
+
+    /**
+     * paymentScene
+     *
+     * @return The main scene to enter payment information
+     * */
+
     private Scene paymentScene() {
         VBox mainBox = new VBox(
                 new Label("Please Enter Your Payment Info:"),
-                Utils.Spacer(),
+                Utils.spacer(),
                 Utils.labelledTextBox("Name:"),
                 Utils.labelledTextBox("ASURITE ID:"),
                 Utils.labelledTextBox("ASU Email:"),
@@ -163,16 +208,29 @@ public class ProtoApplication extends Application {
         Button prevButton = new Button("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
 
-        bottomNavigation.getChildren().addAll(prevButton, Utils.Spacer(), Utils.Spacer(), nextButton);
+        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
 
         mainBox.getChildren().add(bottomNavigation);
 
         return new Scene(mainBox);
     }
+
+    /**
+     * okScene
+     *
+     * @return The scene shown to the customer once they've completed their order
+     * */
+
     private Scene okScene() {
         return new Scene(new Label("Thank you! Your order is on the way!"));
     }
+
+    /**
+     * orderManagerScene
+     *
+     * @return The main scene for the order manager
+     * */
 
     private Scene orderManagerScene() {return new Scene(new Label("orderManagerScene"));}
 

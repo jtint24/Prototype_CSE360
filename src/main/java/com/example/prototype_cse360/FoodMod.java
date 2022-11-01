@@ -5,7 +5,7 @@ import javafx.scene.Node;
 /**
  * FoodMod
  *
- * represents a modification made to a food item, like a size change,
+ * represents a modification made to a food item, like a size change, or an extra sauce request
  * */
 public abstract class FoodMod implements Cloneable {
 

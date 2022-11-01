@@ -7,11 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-import java.util.zip.InflaterInputStream;
 
 /**
  * OrderedItems represent items that have been ordered, including modifications
@@ -28,6 +24,12 @@ public class OrderedItem {
         }
     }
 
+    /**
+     * modifiersGraphic
+     *
+     * @return the graphic where a modifier can be selected, which shown in the modifiers page
+     * */
+
     public Node modifiersGraphic() {
         VBox retBox = new VBox();
 
@@ -36,7 +38,7 @@ public class OrderedItem {
         foodImageView.setFitHeight(20);
         foodImageView.setFitWidth(20);
 
-        header.getChildren().addAll(foodImageView, Utils.Spacer(), new Label(item.name), Utils.Spacer(), new Label(""+item.price));
+        header.getChildren().addAll(foodImageView, Utils.spacer(), new Label(item.name), Utils.spacer(), new Label(""+item.price));
 
         retBox.getChildren().add(header);
 
@@ -46,6 +48,12 @@ public class OrderedItem {
 
         return retBox;
     }
+
+    /**
+     * recieptGraphic
+     *
+     * @return The graphic shown for each item on the receipt page, with a delete button
+     * */
 
     public Node receiptGraphic() {
         VBox retBox = new VBox();
@@ -61,14 +69,14 @@ public class OrderedItem {
 
         Label headerLabel = new Label(item.name);
 
-        HBox header = new HBox(deleteButton, headerLabel, Utils.Spacer(), new Label(item.price+""));
+        HBox header = new HBox(deleteButton, headerLabel, Utils.spacer(), new Label(item.price+""));
 
         retBox.getChildren().add(header);
 
         for (FoodMod mod : mods) {
             if (mod.isInEffect()) {
-                HBox modEntry = new HBox(Utils.Spacer(), Utils.Spacer(), new Label(mod.getName()), Utils.Spacer(), new Label(""+mod.getPriceDifference()));
-                retBox.getChildren().addAll(modEntry, Utils.Spacer());
+                HBox modEntry = new HBox(Utils.spacer(), Utils.spacer(), new Label(mod.getName()), Utils.spacer(), new Label(""+mod.getPriceDifference()));
+                retBox.getChildren().addAll(modEntry, Utils.spacer());
             }
         }
 
@@ -77,6 +85,12 @@ public class OrderedItem {
 
         return retBox;
     }
+
+    /**
+     * totalPrice
+     *
+     * @return Returns the total price of the item with all of its modifiers
+     * */
 
     public double totalPrice() {
         double price = item.price;

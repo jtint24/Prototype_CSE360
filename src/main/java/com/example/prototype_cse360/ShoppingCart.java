@@ -9,10 +9,22 @@ public class ShoppingCart {
     private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
     private static VBox receiptGraphic = new VBox();
 
+    /**
+     * addItem
+     *
+     * adds item to the shopping cart
+     * */
+
     public static void addItem(OrderedItem oi) {
         orderedItems.add(oi);
         // System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
     }
+
+    /**
+     * removeItem
+     *
+     * removes item from the shopping cart
+     * */
 
     public static void removeItem(OrderedItem oi) {
         orderedItems.remove(oi);
@@ -27,6 +39,12 @@ public class ShoppingCart {
     public static Node receiptGraphic() {
         return receiptGraphic;
     }
+
+    /**
+     * updateReceiptGraphic
+     *
+     * Updates the interactive receipt graphic with the graphics from the ordered items
+     * */
 
     public static void updateReceiptGraphic() {
         receiptGraphic.getChildren().removeIf(node -> true);

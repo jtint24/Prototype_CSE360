@@ -17,6 +17,13 @@ public class RadioMods extends FoodMod {
         currentSelection = _currentSelection;
     }
 
+    /**
+     * graphic
+     *
+     * @return The set of labeled radio buttons that are shown in the modifiers page to allow the user to
+     *         select a mod
+     * */
+
     @Override
     Node graphic() {
         VBox retBox = new VBox();
@@ -33,7 +40,7 @@ public class RadioMods extends FoodMod {
             option.setOnAction(actionEvent -> {
                 currentSelection = finalI;
             });
-            retBox.getChildren().add(new HBox(Utils.Spacer(),option));
+            retBox.getChildren().add(new HBox(Utils.spacer(),option));
         }
 
         return retBox;

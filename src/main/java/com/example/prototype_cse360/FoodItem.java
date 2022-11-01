@@ -31,6 +31,13 @@ public class FoodItem {
         availableModifiers = _availableModifiers;
     }
 
+    /**
+     * graphic
+     *
+     * @return The node shown for each menu item in the menu page, with an image of the food item and its
+     *         title
+     * */
+
     public Node graphic() {
         VBox retBox = new VBox();
 
@@ -46,7 +53,11 @@ public class FoodItem {
         return retBox;
     }
 
-
+    /**
+     * graphicButton
+     *
+     * @return The node from graphic() inside a pressable button that adds the item to the shopping cart
+     * */
 
     public Button graphicButton() {
         Button retButton = new Button("",graphic());
@@ -66,6 +77,12 @@ public class FoodItem {
     public String toString() {
         return name+" "+price+"\n";
     }
+
+    /**
+     * Category
+     *
+     * Simple enum containing all the categories of food items
+     * */
 
     public enum Category {PIZZA, SALAD, WINGS, DRINKS, DESSERT}
 }

@@ -8,16 +8,36 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
 public class Utils {
-    public static Region Spacer() {
+
+    /**
+     * spacer
+     *
+     * @return a blank region to space out the geometry
+     * */
+
+    public static Region spacer() {
         Region retRegion = new Region();
         //retRegion.setPadding(new Insets(30));
         retRegion.setPrefWidth(30);
         return retRegion;
     }
+
+    /**
+     * labelledTextBox
+     *
+     * @return A text box with a horizontally aligned label
+     * */
+
     public static HBox labelledTextBox(String name) {
         return  new HBox(new Label(name), new TextField());
     }
 
+
+    /**
+     * getFoodItems
+     *
+     * @return the list of available food items
+     * */
     public static FoodItem[] getFoodItems() {
         return new FoodItem[]{
                 new FoodItem("Pepperoni Pizza", 5.99, FoodItem.Category.PIZZA, new Image("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsfaA0ZWjkuzaSgO1BiLemMVp58QxGbBxzew&usqp=CAU"),
