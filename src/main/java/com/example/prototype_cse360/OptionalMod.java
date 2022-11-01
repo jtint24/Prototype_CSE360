@@ -27,6 +27,7 @@ public class OptionalMod extends FoodMod {
         HBox retBox = new HBox();
         CheckBox activeBox = new CheckBox();
         activeBox.setOnAction(actionEvent -> {inEffect = !inEffect;});
+        activeBox.setSelected(inEffect);
 
         retBox.getChildren().addAll(Utils.spacer(), activeBox, new Label(name), Utils.spacer(), new Label(""+priceDifference));
         return retBox;

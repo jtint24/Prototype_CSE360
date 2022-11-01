@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class ProtoApplication extends Application {
 
@@ -33,6 +34,7 @@ public class ProtoApplication extends Application {
         primaryStage = stage;
 
         Scene mainScene = new Scene(mainPicker());
+
         primaryStage.setTitle("CSE 360 Prototype");
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(400);
