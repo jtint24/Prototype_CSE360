@@ -7,10 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import java.io.Serializable;
 
-import java.lang.reflect.Modifier;
-
-public class FoodItem {
+public class FoodItem implements Serializable {
      final String name;
      final Image image;
      final double price;

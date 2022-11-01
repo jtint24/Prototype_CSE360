@@ -3,9 +3,10 @@ package com.example.prototype_cse360;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ShoppingCart {
+public class ShoppingCart implements Serializable {
     private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
     private static VBox receiptGraphic = new VBox();
 

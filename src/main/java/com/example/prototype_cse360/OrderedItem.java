@@ -9,10 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.Serializable;
+
 /**
  * OrderedItems represent items that have been ordered, including modifications
  * */
-public class OrderedItem {
+public class OrderedItem implements Serializable {
     FoodItem item;
     FoodMod[] mods;
 
