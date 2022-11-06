@@ -13,14 +13,17 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProtoApplication extends Application {
 
-    private Stage primaryStage;     // The stage that is shown at any given time
-
+    private Stage primaryStage;
+    private TempSupportClass caller= new TempSupportClass();
     private final FoodItem[] foodItems = Utils.getFoodItems();
+    private  final ArrayList<OrderListHelper> orders = caller.ListOfOrders();
 
+    private int added=0;
     /**
      * start
      *
@@ -73,7 +76,19 @@ public class ProtoApplication extends Application {
      * @return The main scene for the chef
      * */
 
-    private Scene chefScene() { return new Scene(new Label("chefScene"));}
+    private Scene chefScene() { added++;
+        ChefHelper ch= new ChefHelper(orders, added);
+        VBox mainBox = new VBox();
+
+        Button routingButton = new Button("to OPAgent");
+        routingButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
+
+        mainBox.getChildren().addAll(ch.TopBox(),ch.OrderList(), routingButton);
+
+        Scene scene=new Scene(mainBox,1000,1200);
+        return scene;
+        //return new Scene(new Label("chefScene"));
+    }
 
     /**
      * customerScene
@@ -234,6 +249,18 @@ public class ProtoApplication extends Application {
      * @return The main scene for the order manager
      * */
 
-    private Scene orderManagerScene() {return new Scene(new Label("orderManagerScene"));}
+    private Scene orderManagerScene() { added++;
+        OPHelper ch= new OPHelper(orders, added);
+        VBox mainBox = new VBox();
+        Button routingButton = new Button("To CHef");
+        routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
+
+
+        mainBox.getChildren().addAll(ch.ColumnTitles(), ch.OrderList(), routingButton );
+
+        Scene scene=new Scene(mainBox,1000,1200);
+        return scene;
+        //return new Scene(new Label("orderManagerScene"));
+    }
 
 }
