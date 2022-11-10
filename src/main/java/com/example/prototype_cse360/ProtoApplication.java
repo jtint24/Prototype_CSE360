@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
@@ -79,15 +80,18 @@ public class ProtoApplication extends Application {
     private Scene chefScene() { 
         added++;
         ChefHelper ch= new ChefHelper(orders, added);
-        VBox mainBox = new VBox();
+        GridPane mainBox = new GridPane();
         Button routingButton = new Button("to OPAgent");
         routingButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
 
         mainBox.setAlignment(Pos.CENTER);
-        mainBox.setSpacing(25);
         mainBox.setStyle("-fx-background-color: #850E35;");
         
-        mainBox.getChildren().addAll(ch.TopBox(),ch.OrderList(), routingButton);
+
+        mainBox.addRow(0, ch.TopBox());
+        mainBox.addRow(1, ch.OrderList());
+        mainBox.addRow(2, routingButton);
+        //mainBox.getChildren().addAll(ch.TopBox(),ch.OrderList(), routingButton);
 
         Scene scene=new Scene(mainBox,800,1020);
         return scene;
@@ -253,14 +257,23 @@ public class ProtoApplication extends Application {
      * @return The main scene for the order manager
      * */
 
-    private Scene orderManagerScene() { added++;
+    private Scene orderManagerScene() { 
+        added++;
         OPHelper ch= new OPHelper(orders, added);
-        VBox mainBox = new VBox();
-        Button routingButton = new Button("To CHef");
+        GridPane mainBox = new GridPane();
+        Button routingButton = new Button("To Chef");
         routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
 
+        mainBox.setAlignment(Pos.CENTER);
+        //mainBox.setSpacing(25);
+        mainBox.setStyle("-fx-background-color: #850E35;");
 
-        mainBox.getChildren().addAll(ch.ColumnTitles(), ch.OrderList(), routingButton );
+
+        mainBox.addRow(0, ch.ColumnTitles());
+        mainBox.addRow(1, ch.OrderList());
+        mainBox.addRow(2, routingButton );
+
+        //mainBox.getChildren().addAll(ch.ColumnTitles(), ch.OrderList(), routingButton );
 
         Scene scene=new Scene(mainBox,1000,1200);
         return scene;

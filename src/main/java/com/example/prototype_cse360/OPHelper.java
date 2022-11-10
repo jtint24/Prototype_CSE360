@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -15,6 +16,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 
 public class OPHelper {
@@ -35,19 +38,23 @@ public class OPHelper {
         else{
             orders.addAll(orders1);
         }
-        
-        /*for(int i=0; i<5; i++){
-            orders.add(new OrderListHelper());
-        }*/
+    }
+
+    public Label TitleLabels(String contents){
+        Label newLabel= new Label(contents);
+        newLabel.setFont(new Font("Arial", 40));
+        newLabel.setTextFill(Color.web("#FFFFFF"));
+        return newLabel;
     }
 
     public HBox ColumnTitles(){
         HBox titles = new HBox();
-        Label sent= new Label("Sent Orders");
-        Label submitted= new Label("Submitted Orders");
+
+        titles.setAlignment(Pos.CENTER);
         titles.setSpacing(150);
         titles.setPadding(new Insets(50));
-        titles.getChildren().addAll(sent, submitted);
+
+        titles.getChildren().addAll(TitleLabels("Sent Orders"), TitleLabels("Submitted Orders"));
         return titles;
     }
 
@@ -88,8 +95,11 @@ public class OPHelper {
                 HBox orderBox = new HBox();   
                 VBox orderBox1 = new VBox();
                 VBox orderBox2 = new VBox();
+
                 orderBox.setSpacing(30);
-                orderBox.setPadding(new Insets(30));   
+                orderBox.setPadding(new Insets(30));
+                orderBox.setAlignment(Pos.CENTER_RIGHT);
+
                 orderBox1.getChildren().add(Order(i));
                 orderBox1.getChildren().add(PBarPlace(i));
                 orderBox2.getChildren().add(OrderStateRadios());
@@ -100,12 +110,18 @@ public class OPHelper {
             else{
                 HBox orderBox = new HBox();   
                 orderBox.setSpacing(30);
-                orderBox.setPadding(new Insets(30));   
+                orderBox.setPadding(new Insets(30));
+                orderBox.setAlignment(Pos.CENTER_LEFT);
+                
                 orderBox.getChildren().add(Order(i));
                 orderBox.getChildren().add(SendButton(i));
+
+
                 submitted.getChildren().add(orderBox);
             }
         }
+        sent.setAlignment(Pos.CENTER_LEFT);
+        submitted.setAlignment(Pos.CENTER_RIGHT);
         mainBox.getChildren().addAll(new ScrollPane(submitted), new ScrollPane(sent));
         return mainBox;
     }
