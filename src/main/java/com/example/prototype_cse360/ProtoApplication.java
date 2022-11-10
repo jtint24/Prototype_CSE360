@@ -77,25 +77,29 @@ public class ProtoApplication extends Application {
      * @return The main scene for the chef
      * */
 
-    private Scene chefScene() { 
+    private Scene chefScene() {
+        //Added simply keeps track so that the random generator for orders only runs once 
         added++;
+
+        //Chef helper is helping build the main chef scene
         ChefHelper ch= new ChefHelper(orders, added);
+        //Mainbox is what holds the different aspects, gridpane used for the way it lays out things
         GridPane mainBox = new GridPane();
+
+        //Button for switching between the OPAgent and Chef scene during testing
         Button routingButton = new Button("to OPAgent");
         routingButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
 
+        //Centers and makes the background maroon
         mainBox.setAlignment(Pos.CENTER);
         mainBox.setStyle("-fx-background-color: #850E35;");
         
-
         mainBox.addRow(0, ch.TopBox());
         mainBox.addRow(1, ch.OrderList());
         mainBox.addRow(2, routingButton);
-        //mainBox.getChildren().addAll(ch.TopBox(),ch.OrderList(), routingButton);
 
-        Scene scene=new Scene(mainBox,800,1020);
+        Scene scene=new Scene(mainBox,1000,1200);
         return scene;
-        //return new Scene(new Label("chefScene"));
     }
 
     /**
@@ -265,7 +269,7 @@ public class ProtoApplication extends Application {
         routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
 
         mainBox.setAlignment(Pos.CENTER);
-        //mainBox.setSpacing(25);
+        
         mainBox.setStyle("-fx-background-color: #850E35;");
 
 
@@ -273,11 +277,8 @@ public class ProtoApplication extends Application {
         mainBox.addRow(1, ch.OrderList());
         mainBox.addRow(2, routingButton );
 
-        //mainBox.getChildren().addAll(ch.ColumnTitles(), ch.OrderList(), routingButton );
-
         Scene scene=new Scene(mainBox,1000,1200);
         return scene;
-        //return new Scene(new Label("orderManagerScene"));
     }
 
 }

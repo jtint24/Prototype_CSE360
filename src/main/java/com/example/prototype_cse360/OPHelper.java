@@ -80,9 +80,8 @@ public class OPHelper {
 
     public VBox Order(int i){
         VBox newBox= new VBox();
-        Label newLabel= new Label(""+orders.get(i).orderNumber);
-        newBox.getChildren().add(newLabel);
-        newLabel= new Label(orders.get(i).toString());
+        Label newLabel= new Label(orders.get(i).toString());
+        
         newBox.getChildren().add(newLabel);
         return newBox;
     }
@@ -98,7 +97,7 @@ public class OPHelper {
 
                 orderBox.setSpacing(30);
                 orderBox.setPadding(new Insets(30));
-                orderBox.setAlignment(Pos.CENTER_RIGHT);
+                orderBox.setMinWidth(400);
 
                 orderBox1.getChildren().add(Order(i));
                 orderBox1.getChildren().add(PBarPlace(i));
@@ -111,7 +110,7 @@ public class OPHelper {
                 HBox orderBox = new HBox();   
                 orderBox.setSpacing(30);
                 orderBox.setPadding(new Insets(30));
-                orderBox.setAlignment(Pos.CENTER_LEFT);
+                orderBox.setMinWidth(400);
                 
                 orderBox.getChildren().add(Order(i));
                 orderBox.getChildren().add(SendButton(i));

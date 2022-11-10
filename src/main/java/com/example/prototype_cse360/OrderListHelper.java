@@ -1,4 +1,6 @@
 package com.example.prototype_cse360;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -8,9 +10,11 @@ public class OrderListHelper {
     String[] items;
     int orderNumber;//Currently being filled by a random number going forwad it will be a real number
     int orderState;//This is used by the code to distinguish which lists it should appear on
+    String orderType;
     double orderStateOfCooking;//This is what is used to fill the progress bar 
     int chef;
-    Date newTime;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    LocalDateTime now = LocalDateTime.now();
     
 
     OrderListHelper(){
@@ -19,7 +23,15 @@ public class OrderListHelper {
         //chef = 0;
         orderState= 1+rand.nextInt(2);
         orderStateOfCooking=0.0;
-        AutoFill();
+
+        if(1+rand.nextInt(2)==2){
+            orderType="Delivery";
+        }
+        else{
+            orderType="Pick-Up";
+        }
+
+        AutoFill();  
     }
 
     OrderListHelper(ArrayList<OrderedItem> orderedItems){
@@ -67,9 +79,10 @@ public class OrderListHelper {
 
     @Override
     public String toString(){
-        String fullOrder="";
+        String fullOrder="Order #"+orderNumber+"\n  • Time to be ready: "+dtf.format(now)+"\n  • Order Type: "+orderType+"\n  • Estimated time to Prepare: "+"\n  • Items:"+"\n";
+        
         for(int i=0; i<items.length;i++){
-            fullOrder=fullOrder+"• "+items[i]+"\n";
+            fullOrder=fullOrder+"       • "+items[i]+"\n";
         }
         return fullOrder;
     }

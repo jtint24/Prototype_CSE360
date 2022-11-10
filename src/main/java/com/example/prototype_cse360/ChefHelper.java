@@ -167,7 +167,7 @@ public class ChefHelper {
                 HBox orderBox = new HBox();   
                 
                 orderBox.setSpacing(100);
-                orderBox.setPadding(new Insets(20)); 
+                orderBox.setPadding(new Insets(10)); 
                 orderBox.setAlignment(Pos.CENTER);
                 orderBox.setStyle("-fx-background-color: #FFFFFF;");
 
