@@ -76,16 +76,20 @@ public class ProtoApplication extends Application {
      * @return The main scene for the chef
      * */
 
-    private Scene chefScene() { added++;
+    private Scene chefScene() { 
+        added++;
         ChefHelper ch= new ChefHelper(orders, added);
         VBox mainBox = new VBox();
-
         Button routingButton = new Button("to OPAgent");
         routingButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
 
+        mainBox.setAlignment(Pos.CENTER);
+        mainBox.setSpacing(25);
+        mainBox.setStyle("-fx-background-color: #850E35;");
+        
         mainBox.getChildren().addAll(ch.TopBox(),ch.OrderList(), routingButton);
 
-        Scene scene=new Scene(mainBox,1000,1200);
+        Scene scene=new Scene(mainBox,800,1020);
         return scene;
         //return new Scene(new Label("chefScene"));
     }

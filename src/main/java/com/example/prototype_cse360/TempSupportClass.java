@@ -8,7 +8,7 @@ public class TempSupportClass {
    
     public ArrayList<OrderListHelper> ListOfOrders(){
         ArrayList<OrderListHelper> orders = new ArrayList<>();
-        for(int i=0; i<5; i++){
+        for(int i=0; i<10; i++){
             orders.add(new OrderListHelper());
         }
         return orders;
