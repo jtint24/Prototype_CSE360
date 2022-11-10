@@ -73,7 +73,9 @@ public class OPHelper {
 
     public VBox Order(int i){
         VBox newBox= new VBox();
-        Label newLabel= new Label(orders.get(i).toString());
+        Label newLabel= new Label(""+orders.get(i).orderNumber);
+        newBox.getChildren().add(newLabel);
+        newLabel= new Label(orders.get(i).toString());
         newBox.getChildren().add(newLabel);
         return newBox;
     }

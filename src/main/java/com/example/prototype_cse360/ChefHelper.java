@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -14,6 +15,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 public class ChefHelper {
     
@@ -21,7 +24,6 @@ public class ChefHelper {
     int currentSelection;
     OrderListHelper oLHelper = new OrderListHelper();
     VBox mainBox = new VBox();
-
     private static final ArrayList<OrderListHelper> orders = new ArrayList<>();
 
     final static String[] CookingStates ={"Ready to Prep", "Ready to Cook", "Cooking"}; 
@@ -32,9 +34,10 @@ public class ChefHelper {
         else{
             orders.addAll(orders1);
         }
-        /*for(int i=0; i<5; i++){
-            orders.add(new OrderListHelper());
-        }*/
+        mainBox.setStyle("-fx-background-color: #850E35;");
+        mainBox.setSpacing(20);  
+        mainBox.setPadding(new Insets(20));
+        mainBox.setAlignment(Pos.CENTER);
     }
 
     public HBox TopBox(){
@@ -43,11 +46,13 @@ public class ChefHelper {
         );
         ComboBox<Integer> chefsComboBox = new ComboBox(options);
         Label my_label=new Label("ASU Pizza Chefs");  
+        my_label.setFont(new Font("Arial", 30));
+        my_label.setTextFill(Color.web("#FFFFFF"));
         HBox topBox = new HBox();  
         topBox.setSpacing(120);  
         topBox.setPadding(new Insets(50));
-        topBox.getChildren().add(my_label);  
-        topBox.getChildren().add(chefsComboBox);
+        topBox.setAlignment(Pos.CENTER);
+        topBox.getChildren().addAll(my_label, chefsComboBox);  
 
         chefsComboBox.setOnAction(actionEvent -> {
             if(chefsComboBox.getValue()==null){
@@ -93,6 +98,7 @@ public class ChefHelper {
                 chefRadios.getChildren().add(option);
             }
         }
+        chefRadios.setAlignment(Pos.CENTER);
         return chefRadios;
     }
 
@@ -132,6 +138,7 @@ public class ChefHelper {
                 });
                 cookingRadios.getChildren().add(option);
         }
+        cookingRadios.setAlignment(Pos.CENTER);
         return cookingRadios;
     }
 
@@ -144,20 +151,26 @@ public class ChefHelper {
             orders.get(i).orderStateOfCooking=1;
             UpdateChefList();
         });
+        buttonBox.setAlignment(Pos.CENTER);
         return buttonBox;
     }
     public VBox Order(int i){
         VBox newBox= new VBox();
         Label newLabel= new Label(orders.get(i).toString());
         newBox.getChildren().add(newLabel);
+        newBox.setAlignment(Pos.CENTER);
         return newBox;
     }
     public ScrollPane OrderList(){
         for(int i=0; i<orders.size(); i++){
             if(orders.get(i).orderState==2){
                 HBox orderBox = new HBox();   
-                orderBox.setSpacing(30);
-                orderBox.setPadding(new Insets(30)); 
+                
+                orderBox.setSpacing(100);
+                orderBox.setPadding(new Insets(20)); 
+                orderBox.setAlignment(Pos.CENTER);
+                orderBox.setStyle("-fx-background-color: #FFFFFF;");
+
                 orderBox.getChildren().add(ChefRadios());  
                 orderBox.getChildren().add(Order(i));
                 orderBox.getChildren().add(CookingStateRadios(i));

@@ -1,14 +1,17 @@
 package com.example.prototype_cse360;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 public class OrderListHelper {
     private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
     String[] items;
-    int orderNumber;
-    int orderState;
-    double orderStateOfCooking;
+    int orderNumber;//Currently being filled by a random number going forwad it will be a real number
+    int orderState;//This is used by the code to distinguish which lists it should appear on
+    double orderStateOfCooking;//This is what is used to fill the progress bar 
     int chef;
+    Date newTime;
+    
 
     OrderListHelper(){
         Random rand = new Random();
@@ -17,6 +20,11 @@ public class OrderListHelper {
         orderState= 1+rand.nextInt(2);
         orderStateOfCooking=0.0;
         AutoFill();
+    }
+
+    OrderListHelper(ArrayList<OrderedItem> orderedItems){
+
+
     }
 
     public void AutoFill(){
@@ -61,7 +69,7 @@ public class OrderListHelper {
     public String toString(){
         String fullOrder="";
         for(int i=0; i<items.length;i++){
-            fullOrder=fullOrder+items[i]+"\n";
+            fullOrder=fullOrder+"• "+items[i]+"\n";
         }
         return fullOrder;
     }
