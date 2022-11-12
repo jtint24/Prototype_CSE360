@@ -57,7 +57,7 @@ public class OrderedItem implements Serializable {
      * @return The graphic shown for each item on the receipt page, with a delete button
      * */
 
-    public Node receiptGraphic() {
+    public Node receiptGraphic(ShoppingCart mainShoppingCart) {
         VBox retBox = new VBox();
 
         Image trashImage = new Image("https://cdn-icons-png.flaticon.com/512/1843/1843344.png");
@@ -67,7 +67,7 @@ public class OrderedItem implements Serializable {
 
         Button deleteButton = new Button("",trashView);
 
-        deleteButton.setOnAction(actionEvent -> {ShoppingCart.removeItem(this);});
+        deleteButton.setOnAction(actionEvent -> {mainShoppingCart.removeItem(this);});
 
         Label headerLabel = new Label(item.name);
 

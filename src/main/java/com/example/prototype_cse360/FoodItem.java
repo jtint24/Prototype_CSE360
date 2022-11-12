@@ -58,11 +58,11 @@ public class FoodItem implements Serializable {
      * @return The node from graphic() inside a pressable button that adds the item to the shopping cart
      * */
 
-    public Button graphicButton() {
+    public Button graphicButton(ShoppingCart mainShoppingCart) {
         Button retButton = new Button("",graphic());
 
         retButton.setOnAction(actionEvent -> {
-            ShoppingCart.addItem(new OrderedItem(this));
+            mainShoppingCart.addItem(new OrderedItem(this));
         });
 
         return retButton;

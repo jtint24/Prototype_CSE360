@@ -3,12 +3,16 @@ package com.example.prototype_cse360;
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 public class ShoppingCart implements Serializable {
-    private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
-    private static VBox receiptGraphic = new VBox();
+    private final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
+    private VBox receiptGraphic = new VBox();
+    private String ordererName = "";
 
     /**
      * addItem
@@ -16,7 +20,7 @@ public class ShoppingCart implements Serializable {
      * adds item to the shopping cart
      * */
 
-    public static void addItem(OrderedItem oi) {
+    public void addItem(OrderedItem oi) {
         orderedItems.add(oi);
         // System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
     }
@@ -27,17 +31,17 @@ public class ShoppingCart implements Serializable {
      * removes item from the shopping cart
      * */
 
-    public static void removeItem(OrderedItem oi) {
+    public void removeItem(OrderedItem oi) {
         orderedItems.remove(oi);
         updateReceiptGraphic();
         //System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
     }
 
-    public static ArrayList<OrderedItem> getOrderedItems() {
+    public ArrayList<OrderedItem> getOrderedItems() {
         return orderedItems;
     }
 
-    public static Node receiptGraphic() {
+    public Node receiptGraphic() {
         return receiptGraphic;
     }
 
@@ -47,11 +51,25 @@ public class ShoppingCart implements Serializable {
      * Updates the interactive receipt graphic with the graphics from the ordered items
      * */
 
-    public static void updateReceiptGraphic() {
+    public void updateReceiptGraphic() {
         receiptGraphic.getChildren().removeIf(node -> true);
         for (OrderedItem orderedItem : orderedItems) {
-            receiptGraphic.getChildren().add(orderedItem.receiptGraphic());
+            receiptGraphic.getChildren().add(orderedItem.receiptGraphic(this));
         }
     }
+
+    /*
+    public void writeToFile() {
+        try {
+            FileOutputStream f = new FileOutputStream(new File(fileName()));
+        } catch (FileNotFoundException e) {
+
+        }
+    }
+
+    private String fileName() {
+        return "order-"+ordererName+"-"+hashCode()+".order";
+    }
+     */
 
 }
