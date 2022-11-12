@@ -3,6 +3,7 @@ package com.example.prototype_cse360;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,8 +20,11 @@ import java.util.HashMap;
 
 public class ProtoApplication extends Application {
 
-    private Stage primaryStage;
-    private TempSupportClass caller= new TempSupportClass();
+    private TempSupportClass caller = new TempSupportClass();
+    private final VBox receiptGraphic = new VBox();
+    private Stage primaryStage;     // The stage that is shown at any given time
+    private ShoppingCart mainCart;
+
     private final FoodItem[] foodItems = Utils.getFoodItems();
     private  final ArrayList<OrderListHelper> orders = caller.ListOfOrders();
 
@@ -34,6 +38,9 @@ public class ProtoApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+        mainCart = new ShoppingCart();
+
         primaryStage = stage;
 
         Scene mainScene = new Scene(mainPicker());
@@ -62,7 +69,7 @@ public class ProtoApplication extends Application {
 
         chefButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
         orderManagerButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
-        customerButton.setOnAction(event -> {primaryStage.setScene(customerScene());});
+        customerButton.setOnAction(event -> {primaryStage.setScene(customerScene(mainCart));});
 
         retBox.getChildren().addAll(chefButton,orderManagerButton,customerButton);
 
@@ -108,7 +115,7 @@ public class ProtoApplication extends Application {
      * @return The main scene for the customer, the menu where they can select items
      * */
 
-    private Scene customerScene() {
+    private Scene customerScene(ShoppingCart mainShoppingCart) {
         HashMap<FoodItem.Category,HBox> sortedHBoxes = new HashMap<>();
         VBox retBox = new VBox();
 
@@ -117,7 +124,7 @@ public class ProtoApplication extends Application {
             sortedHBoxes.put(category, new HBox());
         }
         for (FoodItem foodItem : foodItems) {
-            sortedHBoxes.get(foodItem.getCategory()).getChildren().add(foodItem.graphicButton());
+            sortedHBoxes.get(foodItem.getCategory()).getChildren().add(foodItem.graphicButton(mainShoppingCart));
         }
         VBox foodItemsBox = new VBox();
         for (FoodItem.Category category : FoodItem.Category.values()) {
@@ -134,7 +141,7 @@ public class ProtoApplication extends Application {
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
-        nextButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
+        nextButton.setOnAction(event -> {primaryStage.setScene(modifierScene(mainCart));});
 
         bottomNavigation.getChildren().add(nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
@@ -151,7 +158,7 @@ public class ProtoApplication extends Application {
      * @return The scene where modifiers can be added
      * */
 
-    private Scene modifierScene() {
+    private Scene modifierScene(ShoppingCart mainShoppingCart) {
         VBox availBox = new VBox();
 
         Label headerLabel = new Label("Make Customizations!");
@@ -159,7 +166,7 @@ public class ProtoApplication extends Application {
 
         availBox.getChildren().add(headerLabel);
 
-        for (OrderedItem orderedItem : ShoppingCart.getOrderedItems() ) {
+        for (OrderedItem orderedItem : mainCart.getOrderedItems() ) {
             availBox.getChildren().add(orderedItem.modifiersGraphic());
         }
 
@@ -169,7 +176,7 @@ public class ProtoApplication extends Application {
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
         Button prevButton = new Button("Back");
-        prevButton.setOnAction(event -> {primaryStage.setScene(customerScene());});
+        prevButton.setOnAction(event -> {primaryStage.setScene(customerScene(mainShoppingCart));});
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
@@ -186,7 +193,7 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene cartScene() {
-        ShoppingCart.updateReceiptGraphic();
+        updateReceiptGraphic();
 
         VBox mainBox = new VBox();
 
@@ -195,13 +202,13 @@ public class ProtoApplication extends Application {
 
         mainBox.getChildren().add(headerLabel);
 
-        mainBox.getChildren().add(ShoppingCart.receiptGraphic());
+        mainBox.getChildren().add(receiptGraphic());
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(paymentScene());});
         Button prevButton = new Button("Back");
-        prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
+        prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene(mainCart));});
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
@@ -233,7 +240,10 @@ public class ProtoApplication extends Application {
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
-        nextButton.setOnAction(event -> {primaryStage.setScene(okScene());});
+        nextButton.setOnAction(event -> {
+            primaryStage.setScene(okScene());
+            mainCart.writeToFile();
+        });
         Button prevButton = new Button("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
 
@@ -279,6 +289,24 @@ public class ProtoApplication extends Application {
 
         Scene scene=new Scene(mainBox,1000,1200);
         return scene;
+    }
+
+    public Node receiptGraphic() {
+        return receiptGraphic;
+    }
+
+    /**
+     * updateReceiptGraphic
+     *
+     * Updates the interactive receipt graphic with the graphics from the ordered items
+     * */
+
+    public void updateReceiptGraphic() {
+        receiptGraphic.getChildren().removeIf(node -> true);
+        for (OrderedItem orderedItem : mainCart.getOrderedItems()) {
+            receiptGraphic.getChildren().add(orderedItem.receiptGraphic(mainCart, this));
+        }
+
     }
 
 }

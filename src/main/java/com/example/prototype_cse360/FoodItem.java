@@ -11,18 +11,18 @@ import java.io.Serializable;
 
 public class FoodItem implements Serializable {
      final String name;
-     final Image image;
+     final SerializableImage image;
      final double price;
      final Category category;
      FoodMod[] availableModifiers = new FoodMod[0];
 
-    FoodItem(String _name, double _price, Category _category, Image _image) {
+    FoodItem(String _name, double _price, Category _category, SerializableImage _image) {
         name = _name;
         price = _price;
         category = _category;
         image = _image;
     }
-    FoodItem(String _name, double _price, Category _category, Image _image, FoodMod... _availableModifiers) {
+    FoodItem(String _name, double _price, Category _category, SerializableImage _image, FoodMod... _availableModifiers) {
         name = _name;
         price = _price;
         category = _category;
@@ -40,12 +40,13 @@ public class FoodItem implements Serializable {
     public Node graphic() {
         VBox retBox = new VBox();
 
-        ImageView foodImageView = new ImageView(image);
+        ImageView foodImageView = new ImageView(image.getImage());
         foodImageView.setFitHeight(100);
         foodImageView.setFitWidth(100);
 
         retBox.getChildren().addAll(foodImageView, new Label(name+"   "+price));
-        retBox.setStyle("-fx-background-color: #FFFFFF;");
+        retBox.setStyle("-fx-background-color: #850E35;");
+        // changed color to moroon , original :FFFFFF
         retBox.setPadding(new Insets(10));
         retBox.setSpacing(10);
 
@@ -58,11 +59,11 @@ public class FoodItem implements Serializable {
      * @return The node from graphic() inside a pressable button that adds the item to the shopping cart
      * */
 
-    public Button graphicButton() {
+    public Button graphicButton(ShoppingCart mainShoppingCart) {
         Button retButton = new Button("",graphic());
 
         retButton.setOnAction(actionEvent -> {
-            ShoppingCart.addItem(new OrderedItem(this));
+            mainShoppingCart.addItem(new OrderedItem(this));
         });
 
         return retButton;
