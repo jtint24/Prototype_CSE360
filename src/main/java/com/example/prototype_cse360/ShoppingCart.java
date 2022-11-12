@@ -9,6 +9,13 @@ import java.util.ArrayList;
 public class ShoppingCart implements Serializable {
     private final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
     private String ordererName = "";
+    private String creditCardNumber = "";
+    private int creditCardSecurityCode = 0;
+    private String creditCardExpDate = "";
+    private String asuEmail = "";
+    private String asuID = "";
+    private double cookingState;
+    private OrderState orderState;
 
     /**
      * addItem
@@ -77,6 +84,10 @@ public class ShoppingCart implements Serializable {
 
     private String fileName() {
         return "order-"+ordererName+"-"+hashCode()+".order"; // Hash is used to ensure unique file name
+    }
+
+    public enum OrderState {
+        SENT, ACCEPTED, DONE
     }
 
 }
