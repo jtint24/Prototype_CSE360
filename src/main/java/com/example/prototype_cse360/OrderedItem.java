@@ -8,6 +8,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.io.Serializable;
 
@@ -68,17 +70,24 @@ public class OrderedItem implements Serializable {
         Button deleteButton = new Button("",trashView);
 
         deleteButton.setOnAction(actionEvent -> {ShoppingCart.removeItem(this);});
-
+        //change color/font style to carts label items
         Label headerLabel = new Label(item.name);
+        headerLabel.setFont(Font.font("Verdana", FontWeight.MEDIUM, 20));
+
 
         HBox header = new HBox(deleteButton, headerLabel, Utils.spacer(), new Label(item.price+""));
+        header.setStyle("-fx-background-color: #FEFBF6");
+        //FFCB42
 
         retBox.getChildren().add(header);
+
 
         for (FoodMod mod : mods) {
             if (mod.isInEffect()) {
                 HBox modEntry = new HBox(Utils.spacer(), Utils.spacer(), new Label(mod.getName()), Utils.spacer(), new Label(""+mod.getPriceDifference()));
                 retBox.getChildren().addAll(modEntry, Utils.spacer());
+                modEntry.setStyle("-fx-background-color: #FEFBF6");
+                //FEFBF6
             }
         }
 

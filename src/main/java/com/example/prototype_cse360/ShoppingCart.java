@@ -2,6 +2,7 @@ package com.example.prototype_cse360;
 
 import javafx.scene.Node;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,8 @@ public class ShoppingCart implements Serializable {
     public static void addItem(OrderedItem oi) {
         orderedItems.add(oi);
         // System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
+
+
     }
 
     /**
@@ -31,6 +34,7 @@ public class ShoppingCart implements Serializable {
         orderedItems.remove(oi);
         updateReceiptGraphic();
         //System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
+
     }
 
     public static ArrayList<OrderedItem> getOrderedItems() {
@@ -51,7 +55,11 @@ public class ShoppingCart implements Serializable {
         receiptGraphic.getChildren().removeIf(node -> true);
         for (OrderedItem orderedItem : orderedItems) {
             receiptGraphic.getChildren().add(orderedItem.receiptGraphic());
+            receiptGraphic.setStyle("-fx-font-size:15pt; -fx-padding:5px");
+
         }
     }
+
+
 
 }

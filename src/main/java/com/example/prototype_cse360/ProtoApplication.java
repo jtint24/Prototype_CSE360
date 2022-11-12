@@ -7,10 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.scene.layout.GridPane;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -51,20 +57,55 @@ public class ProtoApplication extends Application {
      * @return The picker menu for each of the three different kinds of users
      * */
     public VBox mainPicker() {
+        // layout of main, cart,
+
+        
         VBox retBox = new VBox();
+
         Button chefButton = new Button("Chef");
         Button orderManagerButton = new Button("Order Manager");
         Button customerButton = new Button("Customer");
+         // add image to main menu
+        Image mainImage = new Image("https://i.pinimg.com/originals/7d/72/83/7d728386b3ca83a759e7271c8a894bde.png");
+        ImageView menuImage = new ImageView(mainImage);
+        menuImage.setFitWidth(400);
+        //shifting button sections to center
+        GridPane grid1 = new GridPane();
+        grid1.add(customerButton, 0, 4);
+        grid1.setPadding(new Insets(10, 50, 7, 167));
+
+        // moving order-manger button to center
+        GridPane grid2 = new GridPane();
+        grid2.add(orderManagerButton, 0, 4);
+        grid2.setPadding(new Insets(10, 50, 7, 167));
+
+        //moving chef button to center
+        GridPane grid3 = new GridPane();
+        grid3.add(chefButton, 0, 4);
+        grid3.setPadding(new Insets(10, 50, 7, 167));
+        //mainBox.setStyle("-fx-background-color: #850E35;");
+
+        //change buttons  color
+       // chefButton.setStyle("-fx-background-color: #EFEFEF;");
+        //orderManagerButton.setStyle("-fx-background-color: #EFEFEF;");
+        customerButton.setStyle("-fx-background-color: #EFEFEF;");
+
+        //set a main background
+         retBox.setStyle("-fx-background-color: #850E35;");
+
 
         chefButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
         orderManagerButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
         customerButton.setOnAction(event -> {primaryStage.setScene(customerScene());});
+        //changing menu buttons to center
+        retBox.getChildren().addAll(grid2, grid3,grid1, menuImage);
 
-        retBox.getChildren().addAll(chefButton,orderManagerButton,customerButton);
+        //retBox.getChildren().addAll(grid1);
 
-        retBox.setPadding(new Insets(30));
+        //retBox.setPadding(new Insets(30));
         retBox.setSpacing(10);
         return retBox;
+        
     }
 
     /**
@@ -81,7 +122,7 @@ public class ProtoApplication extends Application {
      * @return The main scene for the customer, the menu where they can select items
      * */
 
-    private Scene customerScene() {
+    private Scene customerScene() { //menu
         HashMap<FoodItem.Category,HBox> sortedHBoxes = new HashMap<>();
         VBox retBox = new VBox();
 
@@ -97,9 +138,14 @@ public class ProtoApplication extends Application {
             HBox hbox = sortedHBoxes.get(category);
             hbox.setSpacing(30);
             hbox.setPadding(new Insets(30));
-
-            foodItemsBox.getChildren().addAll(new Label(category.toString()), hbox);
+            //change to style with enum items
+            foodItemsBox.setStyle("-fx-background-color: #FFCB42");
             // adjusting header text , add new object
+            foodItemsBox.getChildren().addAll(new Label(category.toString()), hbox);
+            //create a object that can change background color
+            hbox.setStyle("-fx-background-color: #850E35;");
+
+
         }
 
 
@@ -108,9 +154,26 @@ public class ProtoApplication extends Application {
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
+        //added a  prev button
+        Button prevButton = new Button("Back");
+        prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
 
-        bottomNavigation.getChildren().add(nextButton);
+        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+
+        //create a grid for prev button move up
+        GridPane grid2 = new GridPane();
+        grid2.add(prevButton, 0, 4);
+        grid2.setPadding(new Insets(10, 50, 7, 167));
+        bottomNavigation.getChildren().add(grid2);
+
+        // create a grid pane and next button object around to be move to the left
+        GridPane grid = new GridPane();
+        grid.add(nextButton, 0, 4);
+        grid.setPadding(new Insets(10, 50, 7, 167));
+        bottomNavigation.getChildren().add(grid);
+        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+
 
         retBox.getChildren().add(bottomNavigation);
 
@@ -158,23 +221,45 @@ public class ProtoApplication extends Application {
      * @return The scene where the customer can change or review the shopping cart
      * */
 
-    private Scene cartScene() {
+    private Scene cartScene() { //cart scene
         ShoppingCart.updateReceiptGraphic();
 
         VBox mainBox = new VBox();
+        //made a label object
+        Label headerLabel = new Label("Sun Devil Pizza!");
+        //added a color to label
+        headerLabel.setTextFill(Color.web("#000000"));
+        headerLabel.setStyle("-fx-background-color: #FFCB42;");
+        headerLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
 
-        Label headerLabel = new Label("Here's Your Cart!");
+        //shifting label to center
+        GridPane grid = new GridPane();
+        grid.add(headerLabel, 0, 4);
+        grid.setPadding(new Insets(10, 50, 7, 167));
+        mainBox.setStyle("-fx-background-color: #850E35;");
+// how to make font color diffrent for cart items?
+        // create a new method in shopping cart?
+
         headerLabel.setTextAlignment(TextAlignment.CENTER);
 
-        mainBox.getChildren().add(headerLabel);
+        mainBox.getChildren().add(grid);
+
 
         mainBox.getChildren().add(ShoppingCart.receiptGraphic());
+
+        //mainBox.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(paymentScene());});
         Button prevButton = new Button("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene());});
+
+        // create a grid pane and prevbutton object around to be move to the left
+        GridPane grid1 = new GridPane();
+        grid.add(prevButton, 0, 4);
+        grid.setPadding(new Insets(10, 200, 7, 200));
+        bottomNavigation.getChildren().add(grid1);
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);

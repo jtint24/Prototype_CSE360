@@ -45,8 +45,8 @@ public class FoodItem implements Serializable {
         foodImageView.setFitWidth(100);
 
         retBox.getChildren().addAll(foodImageView, new Label(name+"   "+price));
-        retBox.setStyle("-fx-background-color: #850E35;");
-        // changed color to moroon , original :FFFFFF
+        retBox.setStyle("-fx-background-color: #FFFFFF;");
+        // changed color from maroon back to original :FFFFFF
         retBox.setPadding(new Insets(10));
         retBox.setSpacing(10);
 
