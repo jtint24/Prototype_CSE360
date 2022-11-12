@@ -5,7 +5,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
-public class OptionalMod extends FoodMod {
+import java.io.Serializable;
+
+public class OptionalMod extends FoodMod implements Serializable {
     boolean inEffect = false;
     private final String name;
     private final double priceDifference;

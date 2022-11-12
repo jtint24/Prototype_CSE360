@@ -211,7 +211,10 @@ public class ProtoApplication extends Application {
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
-        nextButton.setOnAction(event -> {primaryStage.setScene(okScene());});
+        nextButton.setOnAction(event -> {
+            primaryStage.setScene(okScene());
+            mainCart.writeToFile();
+        });
         Button prevButton = new Button("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
 

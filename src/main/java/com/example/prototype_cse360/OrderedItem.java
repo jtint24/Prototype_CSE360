@@ -36,7 +36,7 @@ public class OrderedItem implements Serializable {
         VBox retBox = new VBox();
 
         HBox header = new HBox();
-        ImageView foodImageView = new ImageView(item.image);
+        ImageView foodImageView = new ImageView(item.image.getImage());
         foodImageView.setFitHeight(20);
         foodImageView.setFitWidth(20);
 

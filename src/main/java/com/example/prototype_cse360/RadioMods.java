@@ -6,7 +6,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class RadioMods extends FoodMod {
+import java.io.Serializable;
+
+public class RadioMods extends FoodMod implements Serializable {
     String[] optionNames;
     double[] optionPriceDiffs;
     int currentSelection;

@@ -11,18 +11,18 @@ import java.io.Serializable;
 
 public class FoodItem implements Serializable {
      final String name;
-     final Image image;
+     final SerializableImage image;
      final double price;
      final Category category;
      FoodMod[] availableModifiers = new FoodMod[0];
 
-    FoodItem(String _name, double _price, Category _category, Image _image) {
+    FoodItem(String _name, double _price, Category _category, SerializableImage _image) {
         name = _name;
         price = _price;
         category = _category;
         image = _image;
     }
-    FoodItem(String _name, double _price, Category _category, Image _image, FoodMod... _availableModifiers) {
+    FoodItem(String _name, double _price, Category _category, SerializableImage _image, FoodMod... _availableModifiers) {
         name = _name;
         price = _price;
         category = _category;
@@ -40,7 +40,7 @@ public class FoodItem implements Serializable {
     public Node graphic() {
         VBox retBox = new VBox();
 
-        ImageView foodImageView = new ImageView(image);
+        ImageView foodImageView = new ImageView(image.getImage());
         foodImageView.setFitHeight(100);
         foodImageView.setFitWidth(100);
 
