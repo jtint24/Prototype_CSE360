@@ -4,13 +4,9 @@ import java.util.ArrayList;
 
 import com.example.prototype_cse360.ShoppingCart.OrderState;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
@@ -24,32 +20,27 @@ import javafx.scene.text.Font;
 
 public class OPHelper {
     
-    int numberOfChefs=0;
+    int numberOfChefs = 0;
     int currentSelection;
-    OrderListHelper oLHelper = new OrderListHelper();
-    
+
     HBox mainBox = new HBox();
 
-    private static final ArrayList<ShoppingCart> orders = new ArrayList<>();
+    private static ArrayList<ShoppingCart> orders;
 
-    final static String[] OrderStates ={"Being Cooked", "Ready for Pick-up", "Being Delivered"}; 
+    final static String[] OrderStates = {"Being Cooked", "Ready for Pick-up", "Being Delivered"};
 
-    OPHelper(ArrayList<ShoppingCart> orders1, int added){
-        if(added> 2){
-        }
-        else{
-            orders.addAll(orders1);
-        }
+    OPHelper() {
+        orders = Utils.readOrdersFromFiles(System.getProperty("user.dir"));
     }
 
-    public Label TitleLabels(String contents){
+    public Label TitleLabels(String contents) {
         Label newLabel= new Label(contents);
         newLabel.setFont(new Font("Arial", 40));
         newLabel.setTextFill(Color.web("#FFFFFF"));
         return newLabel;
     }
 
-    public HBox ColumnTitles(){
+    public HBox ColumnTitles() {
         HBox titles = new HBox();
 
         titles.setAlignment(Pos.CENTER);
@@ -60,7 +51,7 @@ public class OPHelper {
         return titles;
     }
 
-    public VBox OrderStateRadios(){
+    public VBox OrderStateRadios() {
         VBox orderRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
 
@@ -80,19 +71,20 @@ public class OPHelper {
         return orderRadios;
     }
 
-    public VBox Order(int i){
+    public VBox Order(int i) {
         VBox newBox= new VBox();
         Label newLabel= new Label(orders.get(i).toString());
         
         newBox.getChildren().add(newLabel);
         return newBox;
     }
-    public HBox OrderList(){
-        VBox sent= new VBox();
-        VBox submitted= new VBox();
 
-        boolean sentEmpty=true, submittedEmpty=true;
-        Label emptyLabel=new Label("Empty");
+    public HBox OrderList() {
+        VBox sent = new VBox();
+        VBox submitted = new VBox();
+
+        boolean sentEmpty = true, submittedEmpty = true;
+        Label emptyLabel = new Label("Empty");
         emptyLabel.setMinWidth(400);
         emptyLabel.setAlignment(Pos.CENTER);
         emptyLabel.setFont(new Font("Arial", 80));
@@ -131,12 +123,12 @@ public class OPHelper {
             }
         }
         
-        if(sentEmpty ==  true){
+        if (sentEmpty) {
             sent.getChildren().add(emptyLabel);
             sent.setMinWidth(400);
         }
 
-        if(submittedEmpty == true){
+        if (submittedEmpty) {
             submitted.getChildren().add(emptyLabel);
             submitted.setMinWidth(400);
         }
@@ -145,7 +137,7 @@ public class OPHelper {
         return mainBox;
     }
 
-    public VBox SendButton(int i){
+    public VBox SendButton(int i) {
         VBox buttonBox = new VBox();
         Button sendButton = new Button("Send to Chef");
         buttonBox.getChildren().add(sendButton);
@@ -156,7 +148,7 @@ public class OPHelper {
         return buttonBox;
     }
 
-    public VBox DeleteButton(int i){
+    public VBox DeleteButton(int i) {
         VBox buttonBox = new VBox();
         Button deleteButton = new Button("Delete From Queue");
         buttonBox.getChildren().add(deleteButton);
@@ -167,7 +159,7 @@ public class OPHelper {
         return buttonBox;
     }
 
-    public VBox PBarPlace(int i){
+    public VBox PBarPlace(int i) {
         VBox pbBox = new VBox();
         Label placeHolder = new Label("empty");
         if(orders.get(i).GetCookingState()==0.0 ){
@@ -188,7 +180,7 @@ public class OPHelper {
         return pbBox;
     }
 
-    public void UpdateChefList(){
+    public void UpdateChefList() {
         mainBox.getChildren().removeIf(node -> true);
         OrderList();
     }

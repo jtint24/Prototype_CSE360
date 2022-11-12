@@ -6,6 +6,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Utils {
@@ -92,5 +97,33 @@ public class Utils {
         } else {
             return new Image(url);
         }
+    }
+
+    public static ArrayList<ShoppingCart> readOrdersFromFiles(String directory) {
+        ArrayList<ShoppingCart> orders = new ArrayList<>();
+        File dir = new File(directory);
+        File[] directoryListing = dir.listFiles();
+        try {
+            if (directoryListing != null) {
+                for (File child : directoryListing) {
+                    if (child.isFile() && child.getName().endsWith(".order")) {
+                        FileInputStream file = new FileInputStream(child);
+                        ObjectInputStream in = new ObjectInputStream(file);
+
+                        ShoppingCart newCart = (ShoppingCart) in.readObject();
+                        orders.add(newCart);
+
+                        in.close();
+                        file.close();
+
+                        System.out.println(child.getName() + " has been deserialized");
+                        System.out.println(newCart);
+                    }
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println(e);
+        }
+        return orders;
     }
 }

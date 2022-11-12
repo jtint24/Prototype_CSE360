@@ -20,15 +20,11 @@ import java.util.HashMap;
 
 public class ProtoApplication extends Application {
 
-    private TempSupportClass caller = new TempSupportClass();
     private final VBox receiptGraphic = new VBox();
     private Stage primaryStage;     // The stage that is shown at any given time
     private ShoppingCart mainCart;
-
     private final FoodItem[] foodItems = Utils.getFoodItems();
-    private  final ArrayList<ShoppingCart> orders = new ArrayList<>();
 
-    private int added=0;
     /**
      * start
      *
@@ -85,11 +81,9 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene chefScene() {
-        //Added simply keeps track so that the random generator for orders only runs once 
-        added++;
 
         //Chef helper is helping build the main chef scene
-        ChefHelper ch= new ChefHelper(orders, added);
+        ChefHelper ch= new ChefHelper();
         //Mainbox is what holds the different aspects, gridpane used for the way it lays out things
         GridPane mainBox = new GridPane();
 
@@ -242,6 +236,7 @@ public class ProtoApplication extends Application {
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {
             primaryStage.setScene(okScene());
+            // mainCart.setPaymentInformation();
             mainCart.writeToFile();
         });
         Button prevButton = new Button("Back");
@@ -272,8 +267,7 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene orderManagerScene() { 
-        added++;
-        OPHelper ch= new OPHelper(orders, added);
+        OPHelper ch = new OPHelper();
         GridPane mainBox = new GridPane();
         Button routingButton = new Button("To Chef");
         routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
@@ -287,7 +281,7 @@ public class ProtoApplication extends Application {
         mainBox.addRow(1, ch.OrderList());
         mainBox.addRow(2, routingButton );
 
-        Scene scene=new Scene(mainBox,1000,1200);
+        Scene scene = new Scene(mainBox,1000,1200);
         return scene;
     }
 

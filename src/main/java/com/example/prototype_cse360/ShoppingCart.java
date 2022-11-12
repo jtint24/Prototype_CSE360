@@ -1,8 +1,5 @@
 package com.example.prototype_cse360;
 
-import javafx.scene.Node;
-import javafx.scene.layout.VBox;
-
 import java.io.*;
 import java.util.ArrayList;
 
@@ -106,8 +103,25 @@ public class ShoppingCart implements Serializable {
         return "order-"+ordererName+"-"+hashCode()+".order"; // Hash is used to ensure unique file name
     }
 
+    public void setPaymentInformation(String _creditCardNumber, int _creditCardSecurityCode, String _creditCardExpDate, String _asuEmail, String _asuID) {
+        creditCardNumber = _creditCardNumber;
+        creditCardSecurityCode = _creditCardSecurityCode;
+        creditCardExpDate = _creditCardExpDate;
+        asuEmail = _asuEmail;
+        asuID = _asuID;
+    }
+
     public enum OrderState {
         SENT, ACCEPTED, DONE
+    }
+
+    @Override
+    public String toString() {
+        String retString = fileName()+"\n\n";
+        for (OrderedItem orderedItem : orderedItems) {
+            retString += "\t"+orderedItem.toString() + "\n";
+        }
+        return retString;
     }
 
 }

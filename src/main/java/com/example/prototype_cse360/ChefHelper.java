@@ -24,18 +24,13 @@ public class ChefHelper {
     
     int numberOfChefs=0;
     int currentSelection;
-    OrderListHelper oLHelper = new OrderListHelper();
+    // OrderListHelper oLHelper = new OrderListHelper();
     VBox mainBox = new VBox();
     private final ArrayList<ShoppingCart> orders = new ArrayList<>();
 
     final String[] CookingStates ={"Ready to Prep", "Ready to Cook", "Cooking"}; 
 
-    ChefHelper(ArrayList<ShoppingCart> orders1, int added){
-        if(added> 2){
-        }
-        else{
-            orders.addAll(orders1);
-        }
+    ChefHelper() {
         mainBox.setStyle("-fx-background-color: #850E35;");
         mainBox.setSpacing(20);  
         mainBox.setPadding(new Insets(20));
