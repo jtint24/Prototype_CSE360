@@ -1,20 +1,35 @@
 package com.example.prototype_cse360;
 
 import java.io.*;
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class ShoppingCart implements Serializable {
     private final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
-    private String ordererName = "";
-    private String creditCardNumber = "";
-    private int creditCardSecurityCode = 0;
-    private String creditCardExpDate = "";
-    private String asuEmail = "";
-    private String asuID = "";
+    private String ordererName;
+    private String creditCardNumber;
+    private int creditCardSecurityCode;
+    private String creditCardExpDate ;
+    private String asuEmail;
+    private String asuID;
     private double cookingState;
     private OrderState orderState;
+    private String uuid;
 
+    ShoppingCart() {
+        orderState = OrderState.ACCEPTED;
 
+        ordererName = "";
+        asuID = "";
+        asuEmail = "";
+        creditCardExpDate = "";
+        creditCardSecurityCode = 0;
+        creditCardNumber = "";
+        ordererName = "";
+        SecureRandom rng = new SecureRandom();
+        uuid = LocalDateTime.now().hashCode()+"-"+rng.nextInt();
+    }
 
     /**
      * addItem
@@ -100,7 +115,7 @@ public class ShoppingCart implements Serializable {
     }
 
     private String fileName() {
-        return "order-"+ordererName+"-"+hashCode()+".order"; // Hash is used to ensure unique file name
+        return "order-"+ordererName+"-"+uuid+".order"; // Hash is used to ensure unique file name
     }
 
     public void setPaymentInformation(String _creditCardNumber, int _creditCardSecurityCode, String _creditCardExpDate, String _asuEmail, String _asuID) {
@@ -117,7 +132,7 @@ public class ShoppingCart implements Serializable {
 
     @Override
     public String toString() {
-        String retString = fileName()+"\n\n";
+        String retString = "Order for "+ordererName+"\n\n";
         for (OrderedItem orderedItem : orderedItems) {
             retString += "\t"+orderedItem.toString() + "\n";
         }

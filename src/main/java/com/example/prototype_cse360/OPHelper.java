@@ -19,7 +19,7 @@ import javafx.scene.text.Font;
 
 
 public class OPHelper {
-    
+
     int numberOfChefs = 0;
     int currentSelection;
 
@@ -73,7 +73,7 @@ public class OPHelper {
 
     public VBox Order(int i) {
         VBox newBox= new VBox();
-        Label newLabel= new Label(orders.get(i).toString());
+        Label newLabel = new Label(orders.get(i).toString());
         
         newBox.getChildren().add(newLabel);
         return newBox;
@@ -107,8 +107,7 @@ public class OPHelper {
                 orderBox2.getChildren().add(DeleteButton(i));
                 orderBox.getChildren().addAll(orderBox1, orderBox2);
                 sent.getChildren().add(orderBox);
-            }
-            else if(orders.get(i).GetOrderState() == OrderState.SENT){
+            } else if(orders.get(i).GetOrderState() == OrderState.SENT) {
                 submittedEmpty= false;
                 HBox orderBox = new HBox();   
                 orderBox.setSpacing(30);
