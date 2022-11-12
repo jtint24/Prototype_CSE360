@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class ShoppingCart implements Serializable {
     private final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
-    private final VBox receiptGraphic = new VBox();
     private String ordererName = "";
 
     /**
@@ -28,9 +27,9 @@ public class ShoppingCart implements Serializable {
      * removes item from the shopping cart
      * */
 
-    public void removeItem(OrderedItem oi) {
+    public void removeItem(OrderedItem oi, ProtoApplication mainApp) {
         orderedItems.remove(oi);
-        updateReceiptGraphic();
+        mainApp.updateReceiptGraphic();
         //System.out.println(orderedItems.stream().map(OrderedItem::toString).reduce("", (a,b)->a+b));
     }
 
@@ -38,22 +37,6 @@ public class ShoppingCart implements Serializable {
         return orderedItems;
     }
 
-    public Node receiptGraphic() {
-        return receiptGraphic;
-    }
-
-    /**
-     * updateReceiptGraphic
-     *
-     * Updates the interactive receipt graphic with the graphics from the ordered items
-     * */
-
-    public void updateReceiptGraphic() {
-        receiptGraphic.getChildren().removeIf(node -> true);
-        for (OrderedItem orderedItem : orderedItems) {
-            receiptGraphic.getChildren().add(orderedItem.receiptGraphic(this));
-        }
-    }
 
 
     /**

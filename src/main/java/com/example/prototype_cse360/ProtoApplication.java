@@ -3,6 +3,7 @@ package com.example.prototype_cse360;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class ProtoApplication extends Application {
-
+    private final VBox receiptGraphic = new VBox();
     private Stage primaryStage;     // The stage that is shown at any given time
     private ShoppingCart mainCart;
 
@@ -164,7 +165,7 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene cartScene() {
-        mainCart.updateReceiptGraphic();
+        updateReceiptGraphic();
 
         VBox mainBox = new VBox();
 
@@ -173,7 +174,7 @@ public class ProtoApplication extends Application {
 
         mainBox.getChildren().add(headerLabel);
 
-        mainBox.getChildren().add(mainCart.receiptGraphic());
+        mainBox.getChildren().add(receiptGraphic());
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
@@ -243,5 +244,23 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene orderManagerScene() {return new Scene(new Label("orderManagerScene"));}
+
+    public Node receiptGraphic() {
+        return receiptGraphic;
+    }
+
+    /**
+     * updateReceiptGraphic
+     *
+     * Updates the interactive receipt graphic with the graphics from the ordered items
+     * */
+
+    public void updateReceiptGraphic() {
+        receiptGraphic.getChildren().removeIf(node -> true);
+        for (OrderedItem orderedItem : mainCart.getOrderedItems()) {
+            receiptGraphic.getChildren().add(orderedItem.receiptGraphic(mainCart, this));
+        }
+
+    }
 
 }
