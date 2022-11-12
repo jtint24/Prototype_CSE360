@@ -2,6 +2,8 @@ package com.example.prototype_cse360;
 
 import java.util.ArrayList;
 
+import com.example.prototype_cse360.ShoppingCart.OrderState;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -28,11 +30,11 @@ public class OPHelper {
     
     HBox mainBox = new HBox();
 
-    private static final ArrayList<OrderListHelper> orders = new ArrayList<>();
+    private static final ArrayList<ShoppingCart> orders = new ArrayList<>();
 
     final static String[] OrderStates ={"Being Cooked", "Ready for Pick-up", "Being Delivered"}; 
 
-    OPHelper(ArrayList<OrderListHelper> orders1, int added){
+    OPHelper(ArrayList<ShoppingCart> orders1, int added){
         if(added> 2){
         }
         else{
@@ -97,7 +99,7 @@ public class OPHelper {
         emptyLabel.setTextFill(Color.web("#000000"));
 
         for(int i=0; i<orders.size(); i++){
-            if(orders.get(i).orderState>=2){
+            if(orders.get(i).GetOrderState() == OrderState.ACCEPTED || orders.get(i).GetOrderState() == OrderState.DONE){
                 sentEmpty= false;
                 HBox orderBox = new HBox();   
                 VBox orderBox1 = new VBox();
@@ -114,7 +116,7 @@ public class OPHelper {
                 orderBox.getChildren().addAll(orderBox1, orderBox2);
                 sent.getChildren().add(orderBox);
             }
-            else if(orders.get(i).orderState==1){
+            else if(orders.get(i).GetOrderState() == OrderState.SENT){
                 submittedEmpty= false;
                 HBox orderBox = new HBox();   
                 orderBox.setSpacing(30);
@@ -148,7 +150,7 @@ public class OPHelper {
         Button sendButton = new Button("Send to Chef");
         buttonBox.getChildren().add(sendButton);
         sendButton.setOnAction(actionEvent -> {
-            orders.get(i).orderState=2;
+            orders.get(i).SetOrderState(OrderState.ACCEPTED);
             UpdateChefList();
         });
         return buttonBox;
@@ -168,20 +170,20 @@ public class OPHelper {
     public VBox PBarPlace(int i){
         VBox pbBox = new VBox();
         Label placeHolder = new Label("empty");
-        if(orders.get(i).orderStateOfCooking==0.0 ){
+        if(orders.get(i).GetCookingState()==0.0 ){
             placeHolder = new Label("Ready to Prep");
         }
-        else if(orders.get(i).orderStateOfCooking==0.3 ){
+        else if(orders.get(i).GetCookingState()==0.3 ){
             placeHolder = new Label("Ready to Cook");
         }
-        else if(orders.get(i).orderStateOfCooking==0.6 ){
+        else if(orders.get(i).GetCookingState()==0.6 ){
             placeHolder = new Label("Cooking");
         }
-        else if(orders.get(i).orderStateOfCooking==1 ){
+        else if(orders.get(i).GetCookingState()==1 ){
             placeHolder = new Label("Cooked");
         }
         ProgressBar pb = new ProgressBar();
-        pb.setProgress(orders.get(i).orderStateOfCooking);
+        pb.setProgress(orders.get(i).GetCookingState());
         pbBox.getChildren().addAll(pb, placeHolder);
         return pbBox;
     }

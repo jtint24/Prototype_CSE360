@@ -26,7 +26,7 @@ public class ProtoApplication extends Application {
     private ShoppingCart mainCart;
 
     private final FoodItem[] foodItems = Utils.getFoodItems();
-    private  final ArrayList<OrderListHelper> orders = caller.ListOfOrders();
+    private  final ArrayList<ShoppingCart> orders = new ArrayList<>();
 
     private int added=0;
     /**

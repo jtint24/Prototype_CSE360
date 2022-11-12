@@ -17,6 +17,8 @@ public class ShoppingCart implements Serializable {
     private double cookingState;
     private OrderState orderState;
 
+
+
     /**
      * addItem
      *
@@ -43,8 +45,6 @@ public class ShoppingCart implements Serializable {
     public ArrayList<OrderedItem> getOrderedItems() {
         return orderedItems;
     }
-
-
 
     /**
      * writeToFile
@@ -81,6 +81,26 @@ public class ShoppingCart implements Serializable {
      *
      * @return The name of the file that this order would be stored in
      * */
+
+    public double GetCookingState(){
+        return this.cookingState;
+
+    }
+
+    public void SetCookingState(double newState){
+        this.cookingState= newState;
+
+    }
+
+    public OrderState GetOrderState(){
+        return this.orderState;
+
+    }
+
+    public void SetOrderState(OrderState newState){
+        this.orderState= newState;
+
+    }
 
     private String fileName() {
         return "order-"+ordererName+"-"+hashCode()+".order"; // Hash is used to ensure unique file name

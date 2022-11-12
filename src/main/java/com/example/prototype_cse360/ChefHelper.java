@@ -2,6 +2,8 @@ package com.example.prototype_cse360;
 
 import java.util.ArrayList;
 
+import com.example.prototype_cse360.ShoppingCart.OrderState;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -24,11 +26,11 @@ public class ChefHelper {
     int currentSelection;
     OrderListHelper oLHelper = new OrderListHelper();
     VBox mainBox = new VBox();
-    private static final ArrayList<OrderListHelper> orders = new ArrayList<>();
+    private final ArrayList<ShoppingCart> orders = new ArrayList<>();
 
-    final static String[] CookingStates ={"Ready to Prep", "Ready to Cook", "Cooking"}; 
+    final String[] CookingStates ={"Ready to Prep", "Ready to Cook", "Cooking"}; 
 
-    ChefHelper(ArrayList<OrderListHelper> orders1, int added){
+    ChefHelper(ArrayList<ShoppingCart> orders1, int added){
         if(added> 2){
         }
         else{
@@ -110,15 +112,15 @@ public class ChefHelper {
                 RadioButton option = new RadioButton(CookingStates[i]);
                 option.setToggleGroup(optionsGroup);
 
-                if(orders.get(j).orderStateOfCooking==0.0 && i == 0){
+                if(orders.get(j).GetCookingState()==0.0 && i == 0){
                     option.setSelected(true);
                     option.requestFocus();
                 }
-                else if(orders.get(j).orderStateOfCooking==0.3 && i == 1){
+                else if(orders.get(j).GetCookingState()==0.3 && i == 1){
                     option.setSelected(true);
                     option.requestFocus();
                 }
-                else if(orders.get(j).orderStateOfCooking==0.6 && i == 2){
+                else if(orders.get(j).GetCookingState()==0.6 && i == 2){
                     option.setSelected(true);
                     option.requestFocus();
                 }
@@ -126,13 +128,13 @@ public class ChefHelper {
                 option.setOnAction(actionEvent -> {
                     if(option.isSelected()){
                         if(option.getText()=="Cooking"){
-                            orders.get(j).orderStateOfCooking=0.6;
+                            orders.get(j).SetCookingState(0.6);
                         }
                         else if(option.getText()=="Ready to Cook"){
-                            orders.get(j).orderStateOfCooking=0.3;
+                            orders.get(j).SetCookingState(0.3);
                         }
                         else{
-                            orders.get(j).orderStateOfCooking=0.0;
+                            orders.get(j).SetCookingState(0.0);
                         }
                     }
                 });
@@ -147,8 +149,8 @@ public class ChefHelper {
         Button deleteButton = new Button("Order Complete");
         buttonBox.getChildren().add(deleteButton);
         deleteButton.setOnAction(actionEvent -> {
-            orders.get(i).orderState=3;
-            orders.get(i).orderStateOfCooking=1;
+            orders.get(i).SetOrderState(OrderState.DONE);
+            orders.get(i).SetCookingState(1);
             UpdateChefList();
         });
         buttonBox.setAlignment(Pos.CENTER);
@@ -163,7 +165,7 @@ public class ChefHelper {
     }
     public ScrollPane OrderList(){
         for(int i=0; i<orders.size(); i++){
-            if(orders.get(i).orderState==2){
+            if(orders.get(i).GetOrderState()==OrderState.ACCEPTED){
                 HBox orderBox = new HBox();   
                 
                 orderBox.setSpacing(100);

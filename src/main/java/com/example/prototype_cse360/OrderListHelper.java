@@ -4,9 +4,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 
 public class OrderListHelper {
-    private static final ArrayList<OrderedItem> orderedItems = new ArrayList<>();
+    private static final ArrayList<ShoppingCart> orderedItems = new ArrayList<>();
     String[] items;
     int orderNumber;//Currently being filled by a random number going forwad it will be a real number
     int orderState;//This is used by the code to distinguish which lists it should appear on
@@ -18,7 +25,7 @@ public class OrderListHelper {
     
 
     OrderListHelper(){
-        Random rand = new Random();
+        /*Random rand = new Random();
         orderNumber= rand.nextInt(10);
         //chef = 0;
         orderState= 1+rand.nextInt(2);
@@ -31,7 +38,7 @@ public class OrderListHelper {
             orderType="Pick-Up";
         }
 
-        AutoFill();  
+        AutoFill();  */
     }
 
     OrderListHelper(ArrayList<OrderedItem> orderedItems){
@@ -69,13 +76,37 @@ public class OrderListHelper {
 
     }
 
-    public static void removeItem(OrderedItem oi) {
+    public static void removeItem(ShoppingCart oi) {
         orderedItems.remove(oi);
     }
 
-    public static void addItem(OrderedItem oi) {
+    public static void addItem(ShoppingCart oi) {
         orderedItems.add(oi);
     }
+
+    public void readFromFiles(String directory) throws ClassNotFoundException, IOException {
+        File dir = new File(directory);
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File child : directoryListing) {
+                FileInputStream file = new FileInputStream(child);
+                ObjectInputStream in = new ObjectInputStream(file);
+
+                
+                ShoppingCart object = (ShoppingCart)in.readObject();
+                orderedItems.add(object);
+
+                in.close();
+                file.close();
+
+                //System.out.println("Object has been deserialized\n"+ "Data after Deserialization.");
+            }
+        }
+        else {
+    
+        }
+    }
+
 
     @Override
     public String toString(){
