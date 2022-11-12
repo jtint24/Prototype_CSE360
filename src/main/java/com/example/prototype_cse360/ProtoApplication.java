@@ -7,10 +7,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Font;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,7 +40,7 @@ public class ProtoApplication extends Application {
 
         Scene mainScene = new Scene(mainPicker());
 
-        primaryStage.setTitle("CSE 360 Prototype");
+        primaryStage.setTitle("Sun Devil Pizza");
         primaryStage.setScene(mainScene);
         primaryStage.setMinWidth(400);
         primaryStage.setMinHeight(400);
@@ -126,11 +132,17 @@ public class ProtoApplication extends Application {
 
     private Scene modifierScene() {
         VBox availBox = new VBox();
-
         Label headerLabel = new Label("Make Customizations!");
-        headerLabel.setTextAlignment(TextAlignment.CENTER);
+        headerLabel.setFont(Font.font("Verdana", FontWeight.BOLD, 14));
+        headerLabel.setTextFill(Color.web("#000000"));
+        headerLabel.setStyle("-fx-background-color: f0a500");
+        //headerLabel.setTextAlignment(TextAlignment.CENTER);
 
-        availBox.getChildren().add(headerLabel);
+        GridPane newgridPane = new GridPane();
+        newgridPane.add(headerLabel, 0, 0);
+        newgridPane.setPadding(new Insets(10, 0, 0, 130));//bottom/left/top/right
+
+        availBox.getChildren().add(newgridPane);
 
         for (OrderedItem orderedItem : ShoppingCart.getOrderedItems() ) {
             availBox.getChildren().add(orderedItem.modifiersGraphic());
@@ -138,16 +150,25 @@ public class ProtoApplication extends Application {
 
         availBox.setSpacing(20);
 
+
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
+        GridPane gridPane = new GridPane();
+        gridPane.add(nextButton , 0, 0);
+        gridPane.setPadding(new Insets(0, 0, 10, 30));//bottom/left/top/right
+
         nextButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
         Button prevButton = new Button("Back");
+        GridPane gridPane1 = new GridPane();
+        gridPane1.add(prevButton , 0, 0);
+        gridPane1.setPadding(new Insets(0, 0, 10, 260));//bottom/left/top/right
         prevButton.setOnAction(event -> {primaryStage.setScene(customerScene());});
 
-        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
-        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+        bottomNavigation.getChildren().addAll(gridPane1, gridPane);
+        //bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
 
         availBox.getChildren().add(bottomNavigation);
+        availBox.setStyle("-fx-background-color: #850E35");
 
         return new Scene(availBox);
     }
@@ -191,29 +212,58 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene paymentScene() {
+
+        Label message = new Label(" Please Enter Your Payment Info:");
+        message.setTextFill(Color.web("#ffffff"));
+        message.setFont(Font.font("Verdana", FontWeight.BOLD, 10));
+
+        GridPane pane = new GridPane();
+        pane.add(message , 0, 0);
+        pane.setPadding(new Insets(20, 0, 0, 0));//bottom/left/top/right
+        pane.setPrefHeight(50);
+
+        pane.setStyle("-fx-background-color: #850E35");
+
         VBox mainBox = new VBox(
-                new Label("Please Enter Your Payment Info:"),
-                Utils.spacer(),
-                Utils.labelledTextBox("Name:"),
-                Utils.labelledTextBox("ASURITE ID:"),
-                Utils.labelledTextBox("ASU Email:"),
-                Utils.labelledTextBox("Credit Card Number:"),
+                pane,
+                Utils.labelledTextBox(" Name:"),
+                Utils.labelledTextBox(" ASURITE ID:"),
+                Utils.labelledTextBox(" ASU Email:"),
+                Utils.labelledTextBox(" Credit Card Number:"),
                 new HBox(
-                    Utils.labelledTextBox("Security Code:"),
-                    Utils.labelledTextBox("Expiration Date:")
+                    Utils.labelledTextBox(" Security Code:"),
+                    Utils.labelledTextBox(" Expiration Date:")
                 )
         );
 
+        mainBox.setSpacing(20);
+
         HBox bottomNavigation = new HBox();
-        Button nextButton = new Button("Next");
+
+        Button nextButton = new Button("Place Order");
+        nextButton.setStyle("-fx-background-color: #f0a500");
+        nextButton.setMinWidth(100);
+        GridPane gridPane = new GridPane();
+        gridPane.add(nextButton, 0, 0);
+        gridPane.setPadding(new Insets(20, 0, 0, 260));//bottom/left/top/right
+
         nextButton.setOnAction(event -> {primaryStage.setScene(okScene());});
         Button prevButton = new Button("Back");
+        GridPane gridPane1 = new GridPane();
+        gridPane1.add(prevButton , 0, 0);
+        gridPane1.setPadding(new Insets(20, 0, 0, 20));//bottom/left/top/right
+
         prevButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
 
-        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
-        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+        bottomNavigation.getChildren().addAll(gridPane1, Utils.spacer(), Utils.spacer(), gridPane);
+        //bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+        bottomNavigation.setStyle("-fx-background-color: #850E35");
+        bottomNavigation.setPrefHeight(70);
 
         mainBox.getChildren().add(bottomNavigation);
+        //mainBox.setSpacing(20);
+        mainBox.setStyle("-fx-background-color: #850E35");
+        mainBox.setStyle("-fx-background-color: #ffffff");
 
         return new Scene(mainBox);
     }
@@ -225,7 +275,36 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene okScene() {
-        return new Scene(new Label("Thank you! Your order is on the way!"));
+
+        // ready to cook, cooking, ready
+        VBox confirmation = new VBox();
+        confirmation.setStyle("-fx-background-color: #850E35");
+
+        Label message1 = new Label("Tracker Your Order");
+        //message1.setPrefWidth(150);
+        message1.setStyle("-fx-background-color: #f0a500");
+        GridPane gridPane = new GridPane();
+        gridPane.add(message1, 0, 0);
+        gridPane.setPadding(new Insets(30, 0, 0, 150));//bottom/left/top/right
+
+        Label message2 = new Label("Order Status:");
+        message2.setTextFill(Color.web("#ffffff"));
+
+        GridPane gridPane1 = new GridPane();
+        gridPane1.add(message2, 0, 0);
+        gridPane1.setPadding(new Insets(50, 0, 0, 165));//bottom/left/top/right
+
+        Label message3 = new Label("ACCEPTED! ");
+        message3.setStyle("-fx-background-color: #f0a500");
+        message3.setFont(Font.font("Verdana", FontWeight.NORMAL, 20));
+
+        GridPane gridPane2 = new GridPane();
+        gridPane2.add(message3, 0, 0);
+        gridPane2.setPadding(new Insets(50, 0, 0, 150));//bottom/left/top/right
+
+        confirmation.getChildren().addAll(gridPane, gridPane1, gridPane2);
+
+        return new Scene(confirmation);
     }
 
     /**

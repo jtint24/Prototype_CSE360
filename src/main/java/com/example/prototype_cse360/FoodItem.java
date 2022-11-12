@@ -44,10 +44,12 @@ public class FoodItem implements Serializable {
         foodImageView.setFitHeight(100);
         foodImageView.setFitWidth(100);
 
-        retBox.getChildren().addAll(foodImageView, new Label(name+"   "+price));
+        retBox.getChildren().addAll(foodImageView, new Label(name+"  "+price));
         retBox.setStyle("-fx-background-color: #FFFFFF;");
         retBox.setPadding(new Insets(10));
         retBox.setSpacing(10);
+
+       // newgridPane.setPadding(new Insets(10, 0, 0, 130));//top/right/bottom/left
 
         return retBox;
     }

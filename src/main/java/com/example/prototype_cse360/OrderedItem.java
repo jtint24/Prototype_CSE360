@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 
@@ -36,17 +37,54 @@ public class OrderedItem implements Serializable {
         VBox retBox = new VBox();
 
         HBox header = new HBox();
+
         ImageView foodImageView = new ImageView(item.image);
         foodImageView.setFitHeight(20);
         foodImageView.setFitWidth(20);
+        foodImageView.setStyle("-fx-background-color: #850E35");
 
-        header.getChildren().addAll(foodImageView, Utils.spacer(), new Label(item.name), Utils.spacer(), new Label(""+item.price));
+        Label itemName = new Label(item.name);
+        itemName.setStyle("-fx-background-color: #850E35");
+        itemName.setTextFill(Color.web("#FFFFFF"));
+
+        Label itemPrice;
+        if(item.name == "PEPPERONI PIZZA"){
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t $"+item.price);
+        }
+        else if(item.name == "CHEESE PIZZA") {
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t\t$" + item.price);
+        }
+        else if(item.name == "CAESAR SALAD" || item.name == "GARDEN SALAD"){
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t     $"+item.price);
+        } else if(item.name == "HAWAIIAN PIZZA"){
+            itemPrice = new Label("\t\t\t\t\t\t\t\t          $"+item.price);
+
+        } else if(item.name == "BUFFALO WINGS"){
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t  $"+item.price);
+        }
+        else if(item.name == "Coca-Cola"){
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t\t\t $"+item.price);
+        }
+        else if(item.name == "DR. PEPPER"){
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t\t      $"+item.price);
+        }
+        else{
+            itemPrice = new Label("\t\t\t\t\t\t\t\t\t\t\t      $"+item.price);
+        }
+
+        itemPrice.setStyle("-fx-background-color: #850E35");
+        itemPrice.setTextFill(Color.web("#FFFFFF"));
+
+        header.getChildren().addAll(foodImageView, Utils.spacer(), itemName, Utils.spacer(), itemPrice);
+        header.setStyle("-fx-background-color: #850E35");
 
         retBox.getChildren().add(header);
 
         for (FoodMod mod : mods) {
             retBox.getChildren().add(mod.graphic());
         }
+        retBox.setStyle("-fx-background-color: #FFFFFF");
+        retBox.setSpacing(10);
 
         return retBox;
     }

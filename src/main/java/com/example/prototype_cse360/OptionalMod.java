@@ -3,6 +3,7 @@ package com.example.prototype_cse360;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.HBox;
 
 public class OptionalMod extends FoodMod {
@@ -11,7 +12,7 @@ public class OptionalMod extends FoodMod {
     private final double priceDifference;
 
     OptionalMod(String _name, double _priceDifference) {
-        name = _name;
+        name = " " + _name;
         priceDifference = _priceDifference;
     }
 
@@ -28,8 +29,7 @@ public class OptionalMod extends FoodMod {
         CheckBox activeBox = new CheckBox();
         activeBox.setOnAction(actionEvent -> {inEffect = !inEffect;});
         activeBox.setSelected(inEffect);
-
-        retBox.getChildren().addAll(Utils.spacer(), activeBox, new Label(name), Utils.spacer(), new Label(""+priceDifference));
+        retBox.getChildren().addAll(Utils.spacer(), activeBox, new Label(name), Utils.spacer(), new Label("\t\t\t\t\t\t\t\t\t\t      $"+priceDifference));
         return retBox;
     }
 

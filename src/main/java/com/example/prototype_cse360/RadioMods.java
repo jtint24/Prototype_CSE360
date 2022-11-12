@@ -28,9 +28,15 @@ public class RadioMods extends FoodMod {
     Node graphic() {
         VBox retBox = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
+        RadioButton option;
 
         for (int i = 0; i<optionNames.length; i++) {
-            RadioButton option = new RadioButton(optionNames[i] +"\t" + optionPriceDiffs[i]);
+            if(optionNames[i] == "Medium") {
+                option = new RadioButton(optionNames[i] +"\t\t\t\t\t\t\t\t\t\t\t\t      $" + optionPriceDiffs[i]);
+            }
+            else{
+                option = new RadioButton(optionNames[i] +"\t\t\t\t\t\t\t\t\t\t\t\t\t      $" + optionPriceDiffs[i]);
+            }
             option.setToggleGroup(optionsGroup);
             if (i == currentSelection) {
                 option.setSelected(true);
@@ -42,6 +48,7 @@ public class RadioMods extends FoodMod {
             });
             retBox.getChildren().add(new HBox(Utils.spacer(),option));
         }
+        retBox.setSpacing(10);
 
         return retBox;
     }
