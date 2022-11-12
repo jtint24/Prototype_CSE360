@@ -9,9 +9,10 @@ public class SerializableImage implements Serializable {
 
     SerializableImage(String _location) {
         location = _location;
+        Utils.cacheImageByURL(location);
     }
 
     public Image getImage() {
-        return new Image(location);
+        return Utils.getCachedImageByURL(location);
     }
 }

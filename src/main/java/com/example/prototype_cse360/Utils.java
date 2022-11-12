@@ -2,10 +2,15 @@ package com.example.prototype_cse360;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
+import java.util.HashMap;
+
 public class Utils {
+
+    private static final HashMap<String, Image> imageCache = new HashMap<>();
 
     /**
      * spacer
@@ -75,5 +80,17 @@ public class Utils {
                         new RadioMods(new String[]{"Small", "Medium", "Large"}, new double[] {0, .50, .75}, 1)
                 ),
         };
+    }
+
+    public static void cacheImageByURL(String url) {
+        imageCache.put(url, new Image(url));
+    }
+
+    public static Image getCachedImageByURL(String url) {
+        if (imageCache.containsKey(url)) {
+            return imageCache.get(url);
+        } else {
+            return new Image(url);
+        }
     }
 }
