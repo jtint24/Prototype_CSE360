@@ -89,8 +89,16 @@ public class OPHelper {
         VBox sent= new VBox();
         VBox submitted= new VBox();
 
+        boolean sentEmpty=true, submittedEmpty=true;
+        Label emptyLabel=new Label("Empty");
+        emptyLabel.setMinWidth(400);
+        emptyLabel.setAlignment(Pos.CENTER);
+        emptyLabel.setFont(new Font("Arial", 80));
+        emptyLabel.setTextFill(Color.web("#000000"));
+
         for(int i=0; i<orders.size(); i++){
             if(orders.get(i).orderState>=2){
+                sentEmpty= false;
                 HBox orderBox = new HBox();   
                 VBox orderBox1 = new VBox();
                 VBox orderBox2 = new VBox();
@@ -106,11 +114,12 @@ public class OPHelper {
                 orderBox.getChildren().addAll(orderBox1, orderBox2);
                 sent.getChildren().add(orderBox);
             }
-            else{
+            else if(orders.get(i).orderState==1){
+                submittedEmpty= false;
                 HBox orderBox = new HBox();   
                 orderBox.setSpacing(30);
                 orderBox.setPadding(new Insets(30));
-                orderBox.setMinWidth(400);
+                orderBox.setMinWidth(420);
                 
                 orderBox.getChildren().add(Order(i));
                 orderBox.getChildren().add(SendButton(i));
@@ -119,8 +128,17 @@ public class OPHelper {
                 submitted.getChildren().add(orderBox);
             }
         }
-        sent.setAlignment(Pos.CENTER_LEFT);
-        submitted.setAlignment(Pos.CENTER_RIGHT);
+        
+        if(sentEmpty ==  true){
+            sent.getChildren().add(emptyLabel);
+            sent.setMinWidth(400);
+        }
+
+        if(submittedEmpty == true){
+            submitted.getChildren().add(emptyLabel);
+            submitted.setMinWidth(400);
+        }
+
         mainBox.getChildren().addAll(new ScrollPane(submitted), new ScrollPane(sent));
         return mainBox;
     }
