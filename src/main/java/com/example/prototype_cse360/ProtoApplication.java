@@ -8,22 +8,27 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ProtoApplication extends Application {
+
+    private TempSupportClass caller = new TempSupportClass();
     private final VBox receiptGraphic = new VBox();
     private Stage primaryStage;     // The stage that is shown at any given time
     private ShoppingCart mainCart;
 
-
     private final FoodItem[] foodItems = Utils.getFoodItems();
+    private  final ArrayList<OrderListHelper> orders = caller.ListOfOrders();
 
+    private int added=0;
     /**
      * start
      *
@@ -79,7 +84,30 @@ public class ProtoApplication extends Application {
      * @return The main scene for the chef
      * */
 
-    private Scene chefScene() { return new Scene(new Label("chefScene"));}
+    private Scene chefScene() {
+        //Added simply keeps track so that the random generator for orders only runs once 
+        added++;
+
+        //Chef helper is helping build the main chef scene
+        ChefHelper ch= new ChefHelper(orders, added);
+        //Mainbox is what holds the different aspects, gridpane used for the way it lays out things
+        GridPane mainBox = new GridPane();
+
+        //Button for switching between the OPAgent and Chef scene during testing
+        Button routingButton = new Button("to OPAgent");
+        routingButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
+
+        //Centers and makes the background maroon
+        mainBox.setAlignment(Pos.CENTER);
+        mainBox.setStyle("-fx-background-color: #850E35;");
+        
+        mainBox.addRow(0, ch.TopBox());
+        mainBox.addRow(1, ch.OrderList());
+        mainBox.addRow(2, routingButton);
+
+        Scene scene=new Scene(mainBox,1000,1200);
+        return scene;
+    }
 
     /**
      * customerScene
@@ -243,7 +271,25 @@ public class ProtoApplication extends Application {
      * @return The main scene for the order manager
      * */
 
-    private Scene orderManagerScene() {return new Scene(new Label("orderManagerScene"));}
+    private Scene orderManagerScene() { 
+        added++;
+        OPHelper ch= new OPHelper(orders, added);
+        GridPane mainBox = new GridPane();
+        Button routingButton = new Button("To Chef");
+        routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
+
+        mainBox.setAlignment(Pos.CENTER);
+        
+        mainBox.setStyle("-fx-background-color: #850E35;");
+
+
+        mainBox.addRow(0, ch.ColumnTitles());
+        mainBox.addRow(1, ch.OrderList());
+        mainBox.addRow(2, routingButton );
+
+        Scene scene=new Scene(mainBox,1000,1200);
+        return scene;
+    }
 
     public Node receiptGraphic() {
         return receiptGraphic;
