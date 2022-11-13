@@ -34,6 +34,12 @@ public class ChefHelper {
         orders = _orders;
     }
 
+    /**
+     * TopBox
+     *
+     * @return the header box for the Chef view
+     * */
+
     public HBox TopBox() {
         ObservableList<Integer> chefNumberOptions =  FXCollections.observableArrayList(
             1,2,3,4,5
@@ -60,6 +66,12 @@ public class ChefHelper {
 
         return topBox;
     }
+
+    /**
+     * ChefRadios
+     *
+     * @return The radio buttons for a chef view
+     * */
 
     public VBox ChefRadios() {
         VBox chefRadios = new VBox();
@@ -95,6 +107,12 @@ public class ChefHelper {
         return chefRadios;
     }
 
+
+    /**
+     * CookingStateRadios
+     *
+     * @return The radio buttons that control the cooking state for a given order
+     * */
     public VBox CookingStateRadios(int j, ShoppingCart order) {
         VBox cookingRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
@@ -133,6 +151,12 @@ public class ChefHelper {
         return cookingRadios;
     }
 
+    /**
+     * DeleteButton
+     *
+     * @return A delete button for a given order
+     * */
+
     public VBox DeleteButton(int i){
         VBox buttonBox = new VBox();
         Button deleteButton = new Button("Order Complete");
@@ -144,6 +168,12 @@ public class ChefHelper {
         buttonBox.setAlignment(Pos.CENTER);
         return buttonBox;
     }
+
+    /**
+     * Order
+     *
+     * @return A view for a given order
+     * */
     public VBox Order(int i){
         VBox newBox= new VBox();
         Label newLabel= new Label(orders.get(i).toString());
@@ -151,6 +181,12 @@ public class ChefHelper {
         newBox.setAlignment(Pos.CENTER);
         return newBox;
     }
+
+    /**
+     * OrderList
+     *
+     * @return The view of all the individual orderviews in a list
+     * */
     public ScrollPane OrderList(){
         for(int i=0; i<orders.size(); i++){
             if(orders.get(i).getOrderState().ordinal()>=OrderState.ASSIGNED_TO_CHEF.ordinal()){

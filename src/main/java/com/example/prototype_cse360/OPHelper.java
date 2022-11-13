@@ -31,12 +31,24 @@ public class OPHelper {
         orders = _orders;
     }
 
+    /**
+     * TitleLabels
+     *
+     * @return The labels for titles in the OPHelper view
+     * */
+
     public Label TitleLabels(String contents) {
         Label newLabel= new Label(contents);
         newLabel.setFont(new Font("Arial", 40));
         newLabel.setTextFill(Color.web("#FFFFFF"));
         return newLabel;
     }
+
+    /**
+     * ColumnTitles
+     *
+     * @return The titles for columns in the OPHelper view
+     * */
 
     public HBox ColumnTitles() {
         HBox titles = new HBox();
@@ -48,6 +60,13 @@ public class OPHelper {
         titles.getChildren().addAll(TitleLabels("Sent Orders"), TitleLabels("Submitted Orders"));
         return titles;
     }
+
+    /**
+     * OrderStateRadios
+     *
+     * @param order the order to generate the radio buttons for
+     * @return The set of Radio buttons that control the orderstate for a given order
+     * */
 
     public VBox OrderStateRadios(ShoppingCart order) {
         VBox orderRadios = new VBox();
@@ -76,6 +95,13 @@ public class OPHelper {
         return orderRadios;
     }
 
+
+    /**
+     * Order
+     *
+     * @return The view for a given order
+     * */
+
     public VBox Order(int i) {
         VBox newBox= new VBox();
         Label newLabel = new Label(orders.get(i).toString());
@@ -83,6 +109,12 @@ public class OPHelper {
         newBox.getChildren().add(newLabel);
         return newBox;
     }
+
+    /**
+     * OrderList
+     *
+     * Returns the view for all of the orders in a list
+     * */
 
     public HBox OrderList() {
         VBox sent = new VBox();
@@ -141,6 +173,13 @@ public class OPHelper {
         return mainBox;
     }
 
+    /**
+     * SendButton
+     *
+     * @param i the index of the order to assign for the send button
+     * @return A send button for a given order
+     * */
+
     public VBox SendButton(int i) {
         VBox buttonBox = new VBox();
         Button sendButton = new Button("Send to Chef");
@@ -151,6 +190,13 @@ public class OPHelper {
         });
         return buttonBox;
     }
+
+    /**
+     * DeleteButton
+     *
+     * @param i the index of the order to assign for the delete button
+     * @return A delete button for a given order
+     * */
 
     public VBox DeleteButton(int i) {
         VBox buttonBox = new VBox();
@@ -163,6 +209,13 @@ public class OPHelper {
         });
         return buttonBox;
     }
+
+    /**
+     * PBarPlace
+     *
+     * @param i the index of the order to assign for the progress bar
+     * @return A progress bar for a given order
+     * */
 
     public VBox PBarPlace(int i) {
         VBox pbBox = new VBox();
