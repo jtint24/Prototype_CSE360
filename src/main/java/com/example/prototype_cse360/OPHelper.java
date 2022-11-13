@@ -21,16 +21,14 @@ import javafx.scene.text.Font;
 public class OPHelper {
 
     int numberOfChefs = 0;
-    int currentSelection;
 
     HBox mainBox = new HBox();
 
     private static ArrayList<ShoppingCart> orders;
 
-    final static String[] OrderStates = {"Being Cooked", "Ready for Pick-up", "Being Delivered"};
+    OPHelper(ArrayList<ShoppingCart> _orders) {
 
-    OPHelper() {
-        orders = Utils.readOrdersFromFiles(System.getProperty("user.dir"));
+        orders = _orders;
     }
 
     public Label TitleLabels(String contents) {
@@ -51,23 +49,30 @@ public class OPHelper {
         return titles;
     }
 
-    public VBox OrderStateRadios() {
+    public VBox OrderStateRadios(ShoppingCart order) {
         VBox orderRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
 
-        for(int i=0; i<OrderStates.length;i++){
-                RadioButton option = new RadioButton(OrderStates[i]);
+        for(int i=0; i<OrderState.values().length;i++){
+                OrderState activeState = OrderState.values()[i];
+
+                if (!activeState.opCanAssign()) {
+                    continue;
+                }
+
+                RadioButton option = new RadioButton(activeState.toString());
                 option.setToggleGroup(optionsGroup);
-                if (i == currentSelection) {
+                if (activeState == order.getOrderState()) {
                     option.setSelected(true);
                     option.requestFocus();
                 }
                 
                 option.setOnAction(actionEvent -> {
-                    
+                    order.setOrderState(activeState);
                 });
                 orderRadios.getChildren().add(option);
         }
+
         return orderRadios;
     }
 
@@ -92,7 +97,7 @@ public class OPHelper {
 
         for(int i=0; i<orders.size(); i++){
             if(orders.get(i).getOrderState() == OrderState.RECEIVED || orders.get(i).getOrderState().chefCanAssign()){
-                sentEmpty= false;
+                sentEmpty = false;
                 HBox orderBox = new HBox();   
                 VBox orderBox1 = new VBox();
                 VBox orderBox2 = new VBox();
@@ -103,7 +108,7 @@ public class OPHelper {
 
                 orderBox1.getChildren().add(Order(i));
                 orderBox1.getChildren().add(PBarPlace(i));
-                orderBox2.getChildren().add(OrderStateRadios());
+                orderBox2.getChildren().add(OrderStateRadios(orders.get(i)));
                 orderBox2.getChildren().add(DeleteButton(i));
                 orderBox.getChildren().addAll(orderBox1, orderBox2);
                 sent.getChildren().add(orderBox);
