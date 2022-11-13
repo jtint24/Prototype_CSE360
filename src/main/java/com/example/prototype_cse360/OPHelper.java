@@ -91,7 +91,7 @@ public class OPHelper {
         emptyLabel.setTextFill(Color.web("#000000"));
 
         for(int i=0; i<orders.size(); i++){
-            if(orders.get(i).GetOrderState() == OrderState.ACCEPTED || orders.get(i).GetOrderState() == OrderState.DONE){
+            if(orders.get(i).getOrderState() == OrderState.RECEIVED || orders.get(i).getOrderState().chefCanAssign()){
                 sentEmpty= false;
                 HBox orderBox = new HBox();   
                 VBox orderBox1 = new VBox();
@@ -107,7 +107,7 @@ public class OPHelper {
                 orderBox2.getChildren().add(DeleteButton(i));
                 orderBox.getChildren().addAll(orderBox1, orderBox2);
                 sent.getChildren().add(orderBox);
-            } else if(orders.get(i).GetOrderState() == OrderState.SENT) {
+            } else if(orders.get(i).getOrderState() == OrderState.DELIVERED || orders.get(i).getOrderState() == OrderState.PREPARED) {
                 submittedEmpty= false;
                 HBox orderBox = new HBox();   
                 orderBox.setSpacing(30);
@@ -141,7 +141,7 @@ public class OPHelper {
         Button sendButton = new Button("Send to Chef");
         buttonBox.getChildren().add(sendButton);
         sendButton.setOnAction(actionEvent -> {
-            orders.get(i).SetOrderState(OrderState.ACCEPTED);
+            orders.get(i).setOrderState(OrderState.ASSIGNED_TO_CHEF);
             UpdateChefList();
         });
         return buttonBox;
@@ -152,7 +152,8 @@ public class OPHelper {
         Button deleteButton = new Button("Delete From Queue");
         buttonBox.getChildren().add(deleteButton);
         deleteButton.setOnAction(actionEvent -> {
-            orders.remove(i);
+            ShoppingCart orderToRemove = orders.remove(i);
+            orderToRemove.deleteFile();
             UpdateChefList();
         });
         return buttonBox;
@@ -160,21 +161,9 @@ public class OPHelper {
 
     public VBox PBarPlace(int i) {
         VBox pbBox = new VBox();
-        Label placeHolder = new Label("empty");
-        if(orders.get(i).GetCookingState()==0.0 ){
-            placeHolder = new Label("Ready to Prep");
-        }
-        else if(orders.get(i).GetCookingState()==0.3 ){
-            placeHolder = new Label("Ready to Cook");
-        }
-        else if(orders.get(i).GetCookingState()==0.6 ){
-            placeHolder = new Label("Cooking");
-        }
-        else if(orders.get(i).GetCookingState()==1 ){
-            placeHolder = new Label("Cooked");
-        }
+        Label placeHolder = new Label(orders.get(i).getOrderState().name());
         ProgressBar pb = new ProgressBar();
-        pb.setProgress(orders.get(i).GetCookingState());
+        pb.setProgress(orders.get(i).getOrderState().getProgress());
         pbBox.getChildren().addAll(pb, placeHolder);
         return pbBox;
     }

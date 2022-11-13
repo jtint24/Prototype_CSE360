@@ -13,12 +13,11 @@ public class ShoppingCart implements Serializable {
     private String creditCardExpDate ;
     private String asuEmail;
     private String asuID;
-    private double cookingState;
     private OrderState orderState;
     private String uuid;
 
     ShoppingCart() {
-        orderState = OrderState.ACCEPTED;
+        orderState = OrderState.ORDERING;
 
         ordererName = "";
         asuID = "";
@@ -67,6 +66,7 @@ public class ShoppingCart implements Serializable {
 
     public void writeToFile() {
         try {
+            orderState = OrderState.RECEIVED;
             FileOutputStream fileOutputStream = new FileOutputStream(new File(fileName()));
             ObjectOutputStream objOutputStream = new ObjectOutputStream(fileOutputStream);
             System.out.println("Created Streams!");
@@ -78,7 +78,6 @@ public class ShoppingCart implements Serializable {
             objOutputStream.close();
             fileOutputStream.close();
             System.out.println("Finished writing order!");
-
         } catch (FileNotFoundException e) {
             System.out.println("FileNotFound Exception when writing shopping cart to file!");
         } catch (IOException e) {
@@ -89,31 +88,33 @@ public class ShoppingCart implements Serializable {
     }
 
     /**
-     * fileName
+     * deleteFile
      *
-     * @return The name of the file that this order would be stored in
+     * Deletes the associated file of the shopping cart. Fails if no such file exists.
      * */
-
-    public double GetCookingState(){
-        return this.cookingState;
-
+    public void deleteFile() {
+        try {
+            File fileToDelete = new File(fileName());
+            fileToDelete.delete();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
-    public void SetCookingState(double newState){
-        this.cookingState= newState;
-
-    }
-
-    public OrderState GetOrderState(){
+    public OrderState getOrderState() {
         return this.orderState;
 
     }
 
-    public void SetOrderState(OrderState newState){
+    public void setOrderState(OrderState newState){
         this.orderState= newState;
-
     }
 
+    /**
+     * fileName
+     *
+     * @return The name of the file that this order would be stored in
+     * */
     private String fileName() {
         return "order-"+ordererName+"-"+uuid+".order"; // Hash is used to ensure unique file name
     }
@@ -127,7 +128,42 @@ public class ShoppingCart implements Serializable {
     }
 
     public enum OrderState {
-        SENT, ACCEPTED, DONE
+        ORDERING, RECEIVED, ASSIGNED_TO_CHEF, COOKING, PREPARED, DELIVERED;
+
+        /**
+         * chefCanAssign
+         *
+         * @return whether a chef can assign an order to this state
+         * */
+        public boolean chefCanAssign() {
+            return switch (this) {
+                case ASSIGNED_TO_CHEF,COOKING,PREPARED -> true;
+                default -> false;
+            };
+        }
+
+        /**
+         * opCanAssign
+         *
+         * @return whether an order processor can assign an order to this state
+         * */
+        public boolean opCanAssign() {
+            return switch (this) {
+                case COOKING,PREPARED -> false;
+                default -> true;
+            };
+        }
+
+        /**
+         * getProgress
+         *
+         * @return The percent completion that the state represents, from 0.00 to 1.00
+         * */
+
+        public double getProgress() {
+            return ((double)this.ordinal()) / ((double)OrderState.values().length);
+        }
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.prototype_cse360;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import com.example.prototype_cse360.ShoppingCart.OrderState;
 
@@ -8,7 +9,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -22,26 +22,24 @@ import javafx.scene.text.Font;
 
 public class ChefHelper {
     
-    int numberOfChefs=0;
+    int numberOfChefs = 0;
     int currentSelection;
-    // OrderListHelper oLHelper = new OrderListHelper();
     VBox mainBox = new VBox();
-    private final ArrayList<ShoppingCart> orders = new ArrayList<>();
-
-    final String[] CookingStates ={"Ready to Prep", "Ready to Cook", "Cooking"}; 
+    private ArrayList<ShoppingCart> orders;
 
     ChefHelper() {
         mainBox.setStyle("-fx-background-color: #850E35;");
         mainBox.setSpacing(20);  
         mainBox.setPadding(new Insets(20));
         mainBox.setAlignment(Pos.CENTER);
+        orders = Utils.readOrdersFromFiles(System.getProperty("user.dir"));
     }
 
-    public HBox TopBox(){
-        ObservableList<Integer> options=  FXCollections.observableArrayList(
+    public HBox TopBox() {
+        ObservableList<Integer> chefNumberOptions =  FXCollections.observableArrayList(
             1,2,3,4,5
         );
-        ComboBox<Integer> chefsComboBox = new ComboBox(options);
+        ComboBox<Integer> chefsComboBox = new ComboBox(chefNumberOptions);
         Label my_label=new Label("ASU Pizza Chefs");  
         my_label.setFont(new Font("Arial", 30));
         my_label.setTextFill(Color.web("#FFFFFF"));
@@ -53,11 +51,10 @@ public class ChefHelper {
 
         chefsComboBox.setOnAction(actionEvent -> {
             if(chefsComboBox.getValue()==null){
-                numberOfChefs= 0;
+                numberOfChefs = 0;
             }
             else{    
-                numberOfChefs= chefsComboBox.getValue();
-
+                numberOfChefs = chefsComboBox.getValue();
             }
             UpdateChefList();
         });
@@ -65,10 +62,10 @@ public class ChefHelper {
         return topBox;
     }
 
-    public VBox ChefRadios(){
+    public VBox ChefRadios() {
         VBox chefRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
-        for(int i=0; i<=numberOfChefs;i++){
+        for(int i=0; i<=numberOfChefs; i++){
             if(i==0){
                 RadioButton option = new RadioButton("None");
                 option.setToggleGroup(optionsGroup);
@@ -99,37 +96,43 @@ public class ChefHelper {
         return chefRadios;
     }
 
-    public VBox CookingStateRadios(int j){
+    public VBox CookingStateRadios(int j) {
         VBox cookingRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
 
-        for(int i=0; i<CookingStates.length;i++){
-                RadioButton option = new RadioButton(CookingStates[i]);
+        for(int i=0; i<OrderState.values().length;i++){
+                RadioButton option = new RadioButton(OrderState.values()[i].name());
+
+                if (!OrderState.values()[i].chefCanAssign()) {
+                    continue;
+                }
+
                 option.setToggleGroup(optionsGroup);
 
-                if(orders.get(j).GetCookingState()==0.0 && i == 0){
+                if(orders.get(j).getOrderState() == OrderState.ASSIGNED_TO_CHEF && i == 0) {
                     option.setSelected(true);
                     option.requestFocus();
                 }
-                else if(orders.get(j).GetCookingState()==0.3 && i == 1){
+                else if(orders.get(j).getOrderState() == OrderState.COOKING && i == 1){
                     option.setSelected(true);
                     option.requestFocus();
                 }
-                else if(orders.get(j).GetCookingState()==0.6 && i == 2){
+                else if(orders.get(j).getOrderState() == OrderState.PREPARED && i == 2){
                     option.setSelected(true);
                     option.requestFocus();
                 }
 
-                option.setOnAction(actionEvent -> {
+            int finalI = i;
+            option.setOnAction(actionEvent -> {
                     if(option.isSelected()){
-                        if(option.getText()=="Cooking"){
-                            orders.get(j).SetCookingState(0.6);
+                        if(finalI == 0){
+                            orders.get(j).setOrderState(OrderState.ASSIGNED_TO_CHEF);
                         }
-                        else if(option.getText()=="Ready to Cook"){
-                            orders.get(j).SetCookingState(0.3);
+                        else if(finalI == 2){
+                            orders.get(j).setOrderState(OrderState.COOKING);
                         }
                         else{
-                            orders.get(j).SetCookingState(0.0);
+                            orders.get(j).setOrderState(OrderState.PREPARED);
                         }
                     }
                 });
@@ -144,8 +147,7 @@ public class ChefHelper {
         Button deleteButton = new Button("Order Complete");
         buttonBox.getChildren().add(deleteButton);
         deleteButton.setOnAction(actionEvent -> {
-            orders.get(i).SetOrderState(OrderState.DONE);
-            orders.get(i).SetCookingState(1);
+            orders.get(i).setOrderState(OrderState.DELIVERED);
             UpdateChefList();
         });
         buttonBox.setAlignment(Pos.CENTER);
@@ -160,7 +162,7 @@ public class ChefHelper {
     }
     public ScrollPane OrderList(){
         for(int i=0; i<orders.size(); i++){
-            if(orders.get(i).GetOrderState()==OrderState.ACCEPTED){
+            if(orders.get(i).getOrderState().ordinal()>=OrderState.ASSIGNED_TO_CHEF.ordinal()){
                 HBox orderBox = new HBox();   
                 
                 orderBox.setSpacing(100);
