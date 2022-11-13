@@ -99,7 +99,7 @@ public class ProtoApplication extends Application {
         //orderManagerButton.setStyle("-fx-background-color: #EFEFEF;");
         customerButton.setStyle("-fx-background-color: #EFEFEF;");
 
-        //set a main background
+        //Set a main background
         retBox.setStyle("-fx-background-color: #850E35;");
 
 
