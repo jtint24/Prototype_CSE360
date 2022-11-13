@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+
 import java.io.Serializable;
 
 public class FoodItem implements Serializable {
@@ -14,7 +15,7 @@ public class FoodItem implements Serializable {
      final SerializableImage image;
      final double price;
      final Category category;
-     FoodMod[] availableModifiers = new FoodMod[0];
+    FoodMod[] availableModifiers = new FoodMod[0];
 
     FoodItem(String _name, double _price, Category _category, SerializableImage _image) {
         name = _name;
