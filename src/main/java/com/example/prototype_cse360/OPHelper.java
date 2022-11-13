@@ -21,7 +21,6 @@ import javafx.scene.text.Font;
 public class OPHelper {
 
     int numberOfChefs = 0;
-    int currentSelection;
 
     HBox mainBox = new HBox();
 
@@ -61,9 +60,9 @@ public class OPHelper {
                     continue;
                 }
 
-                RadioButton option = new RadioButton(activeState.name());
+                RadioButton option = new RadioButton(activeState.toString());
                 option.setToggleGroup(optionsGroup);
-                if (i == currentSelection) {
+                if (activeState == order.getOrderState()) {
                     option.setSelected(true);
                     option.requestFocus();
                 }
@@ -73,6 +72,7 @@ public class OPHelper {
                 });
                 orderRadios.getChildren().add(option);
         }
+
         return orderRadios;
     }
 
@@ -97,7 +97,7 @@ public class OPHelper {
 
         for(int i=0; i<orders.size(); i++){
             if(orders.get(i).getOrderState() == OrderState.RECEIVED || orders.get(i).getOrderState().chefCanAssign()){
-                sentEmpty= false;
+                sentEmpty = false;
                 HBox orderBox = new HBox();   
                 VBox orderBox1 = new VBox();
                 VBox orderBox2 = new VBox();

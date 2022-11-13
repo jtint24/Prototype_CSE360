@@ -95,12 +95,12 @@ public class ChefHelper {
         return chefRadios;
     }
 
-    public VBox CookingStateRadios(int j) {
+    public VBox CookingStateRadios(int j, ShoppingCart order) {
         VBox cookingRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
 
         for(int i=0; i<OrderState.values().length;i++){
-                RadioButton option = new RadioButton(OrderState.values()[i].name());
+                RadioButton option = new RadioButton(OrderState.values()[i].toString());
 
                 if (!OrderState.values()[i].chefCanAssign()) {
                     continue;
@@ -108,15 +108,7 @@ public class ChefHelper {
 
                 option.setToggleGroup(optionsGroup);
 
-                if(orders.get(j).getOrderState() == OrderState.ASSIGNED_TO_CHEF && i == 0) {
-                    option.setSelected(true);
-                    option.requestFocus();
-                }
-                else if(orders.get(j).getOrderState() == OrderState.COOKING && i == 1){
-                    option.setSelected(true);
-                    option.requestFocus();
-                }
-                else if(orders.get(j).getOrderState() == OrderState.PREPARED && i == 2){
+                if (OrderState.values()[i] == order.getOrderState()) {
                     option.setSelected(true);
                     option.requestFocus();
                 }
@@ -171,7 +163,7 @@ public class ChefHelper {
 
                 orderBox.getChildren().add(ChefRadios());  
                 orderBox.getChildren().add(Order(i));
-                orderBox.getChildren().add(CookingStateRadios(i));
+                orderBox.getChildren().add(CookingStateRadios(i, orders.get(i)));
                 orderBox.getChildren().add(DeleteButton(i));
                 mainBox.getChildren().add(orderBox);
             }
