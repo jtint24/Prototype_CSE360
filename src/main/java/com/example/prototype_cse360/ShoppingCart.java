@@ -149,7 +149,7 @@ public class ShoppingCart implements Serializable {
          * */
         public boolean opCanAssign() {
             return switch (this) {
-                case COOKING,PREPARED -> false;
+                case ORDERING, COOKING -> false;
                 default -> true;
             };
         }
@@ -162,6 +162,17 @@ public class ShoppingCart implements Serializable {
 
         public double getProgress() {
             return ((double)this.ordinal()) / ((double)OrderState.values().length);
+        }
+
+        public String toString() {
+            return switch (this) {
+                case ORDERING -> "Ordering";
+                case COOKING -> "Cooking";
+                case ASSIGNED_TO_CHEF -> "Assigned To Chef";
+                case PREPARED -> "Prepared";
+                case DELIVERED -> "Delivered";
+                case RECEIVED -> "Received";
+            };
         }
 
     }

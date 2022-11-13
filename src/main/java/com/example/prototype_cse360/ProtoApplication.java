@@ -24,6 +24,7 @@ public class ProtoApplication extends Application {
     private Stage primaryStage;     // The stage that is shown at any given time
     private ShoppingCart mainCart;
     private final FoodItem[] foodItems = Utils.getFoodItems();
+    private ArrayList<ShoppingCart> orders;
 
     /**
      * start
@@ -34,7 +35,7 @@ public class ProtoApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-
+        orders = Utils.readOrdersFromFiles(System.getProperty("user.dir"));
         mainCart = new ShoppingCart();
 
         primaryStage = stage;
@@ -83,7 +84,7 @@ public class ProtoApplication extends Application {
     private Scene chefScene() {
 
         //Chef helper is helping build the main chef scene
-        ChefHelper ch= new ChefHelper();
+        ChefHelper ch= new ChefHelper(orders);
         //Mainbox is what holds the different aspects, gridpane used for the way it lays out things
         GridPane mainBox = new GridPane();
 
@@ -267,7 +268,7 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene orderManagerScene() { 
-        OPHelper ch = new OPHelper();
+        OPHelper ch = new OPHelper(orders);
         GridPane mainBox = new GridPane();
         Button routingButton = new Button("To Chef");
         routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});

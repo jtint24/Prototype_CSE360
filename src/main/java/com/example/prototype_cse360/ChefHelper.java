@@ -1,7 +1,6 @@
 package com.example.prototype_cse360;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import com.example.prototype_cse360.ShoppingCart.OrderState;
 
@@ -27,12 +26,12 @@ public class ChefHelper {
     VBox mainBox = new VBox();
     private ArrayList<ShoppingCart> orders;
 
-    ChefHelper() {
+    ChefHelper(ArrayList<ShoppingCart> _orders) {
         mainBox.setStyle("-fx-background-color: #850E35;");
         mainBox.setSpacing(20);  
         mainBox.setPadding(new Insets(20));
         mainBox.setAlignment(Pos.CENTER);
-        orders = Utils.readOrdersFromFiles(System.getProperty("user.dir"));
+        orders = _orders;
     }
 
     public HBox TopBox() {
@@ -66,7 +65,7 @@ public class ChefHelper {
         VBox chefRadios = new VBox();
         ToggleGroup optionsGroup = new ToggleGroup();
         for(int i=0; i<=numberOfChefs; i++){
-            if(i==0){
+            if (i==0) {
                 RadioButton option = new RadioButton("None");
                 option.setToggleGroup(optionsGroup);
                 if (i == currentSelection) {
