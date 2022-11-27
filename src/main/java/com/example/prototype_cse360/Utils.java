@@ -36,8 +36,8 @@ public class Utils {
      * @return A text box with a horizontally aligned label
      * */
 
-    public static HBox labelledTextBox(String name) {
-        return  new HBox(new Label(name), new TextField());
+    public static HBox labelledTextBox(String name, TextField tf) {
+        return  new HBox(new Label(name), tf);
     }
 
 
@@ -125,5 +125,58 @@ public class Utils {
             System.out.println(e);
         }
         return orders;
+    }
+
+    /**
+     * isNumericChar
+     *
+     * @return whether the char is a digit 0-9
+     * */
+    private static boolean isNumericChar(char c) {
+        return "1234567890".contains(c+"");
+    }
+
+    /**
+     * isNumeric
+     *
+     * @return if a string only contains digits
+     * */
+    private static boolean isNumeric(String s) {
+        if (s.length() == 0) {
+            return false;
+        }
+        for (char c : s.toCharArray()) {
+            if (!isNumericChar(c)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * isAsuEmail
+     *
+     * @return if a string is a valid ASU email
+     * */
+
+    static boolean isAsuEmail(String s) {
+        return s.matches(".+@asu\\.edu");
+    }
+
+    /**
+     * isNumber
+     *
+     * @return whether a string is an integer of length n
+     * */
+
+    static boolean isNumber(String s, int n) {
+        if (s.length() == n) {
+            return isNumeric(s);
+        } else {
+            return false;
+        }
+    }
+    static boolean isValidDate(String s) {
+        return s.matches("^(0[1-9]|1[0-2])\\/?([0-9]{4}|[0-9]{2})$");
     }
 }

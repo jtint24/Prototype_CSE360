@@ -38,7 +38,7 @@ public class OPHelper {
      * */
 
     public Label TitleLabels(String contents) {
-        Label newLabel= new Label(contents);
+        Label newLabel = new Label(contents);
         newLabel.setFont(new Font("Arial", 40));
         newLabel.setTextFill(Color.web("#FFFFFF"));
         return newLabel;

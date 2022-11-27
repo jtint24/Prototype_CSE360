@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -220,24 +221,55 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene paymentScene() {
+        TextField nameField = new TextField();
+        TextField asuriteIDField = new TextField();
+        TextField asuEmail = new TextField();
+        TextField ccNumber = new TextField();
+        TextField securityCode = new TextField();
+        TextField expDate = new TextField();
+
+        String errorString = "";
+        Label errorLabel = new Label(errorString);
+        errorLabel.setStyle("-fx-text-fill: red");
+
         VBox mainBox = new VBox(
                 new Label("Please Enter Your Payment Info:"),
                 Utils.spacer(),
-                Utils.labelledTextBox("Name:"),
-                Utils.labelledTextBox("ASURITE ID:"),
-                Utils.labelledTextBox("ASU Email:"),
-                Utils.labelledTextBox("Credit Card Number:"),
+                Utils.labelledTextBox("Name:", nameField),
+                Utils.labelledTextBox("ASURITE ID:", asuriteIDField),
+                Utils.labelledTextBox("ASU Email:", asuEmail),
+                Utils.labelledTextBox("Credit Card Number:", ccNumber),
                 new HBox(
-                    Utils.labelledTextBox("Security Code:"),
-                    Utils.labelledTextBox("Expiration Date:")
-                )
+                    Utils.labelledTextBox("Security Code:", securityCode),
+                    Utils.labelledTextBox("Expiration Date:", expDate)
+                ),
+                errorLabel
         );
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {
+            errorLabel.setText("");
+            if (!Utils.isAsuEmail(asuEmail.getText())) {
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid ASU Email\n");
+            }
+            if (!Utils.isNumber(asuriteIDField.getText(), 10)) {
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid ASURite ID\n");
+            }
+            if (!Utils.isNumber(ccNumber.getText(), 16)) {
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid Credit Card Number\n");
+            }
+            if (!Utils.isNumber(securityCode.getText(), 3)) {
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid Security Code\n");
+            }
+            if (!Utils.isValidDate(expDate.getText())) {
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid Expiration Date\n");
+            }
+            if (errorLabel.getText().length() != 0) {
+                return;
+            }
             primaryStage.setScene(okScene());
-            // mainCart.setPaymentInformation();
+            mainCart.setPaymentInformation(ccNumber.getText(), Integer.parseInt(securityCode.getText()), expDate.getText(), asuEmail.getText(), asuriteIDField.getText());
             mainCart.writeToFile();
         });
         Button prevButton = new Button("Back");
