@@ -236,7 +236,7 @@ public class ProtoApplication extends Application {
                 new Label("Please Enter Your Payment Info:"),
                 Utils.spacer(),
                 Utils.labelledTextBox("Name:", nameField),
-                Utils.labelledTextBox("ASURITE ID:", asuriteIDField),
+                Utils.labelledTextBox("ASU ID:", asuriteIDField),
                 Utils.labelledTextBox("ASU Email:", asuEmail),
                 Utils.labelledTextBox("Credit Card Number:", ccNumber),
                 new HBox(
@@ -250,11 +250,14 @@ public class ProtoApplication extends Application {
         Button nextButton = new Button("Next");
         nextButton.setOnAction(event -> {
             errorLabel.setText("");
+            if (nameField.getText().isBlank()) {
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Name\n");
+            }
             if (!Utils.isAsuEmail(asuEmail.getText())) {
                 errorLabel.setText(errorLabel.getText() + "Please Enter a Valid ASU Email\n");
             }
             if (!Utils.isNumber(asuriteIDField.getText(), 10)) {
-                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid ASURite ID\n");
+                errorLabel.setText(errorLabel.getText() + "Please Enter a Valid ASU ID\n");
             }
             if (!Utils.isNumber(ccNumber.getText(), 16)) {
                 errorLabel.setText(errorLabel.getText() + "Please Enter a Valid Credit Card Number\n");
