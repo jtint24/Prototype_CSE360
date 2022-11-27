@@ -31,6 +31,15 @@ public class OPHelper {
         orders = _orders;
     }
 
+    public Label emptyLabel(){
+        Label emptyLabel = new Label("Empty");
+        emptyLabel.setMinWidth(400);
+        emptyLabel.setAlignment(Pos.CENTER);
+        emptyLabel.setFont(new Font("Arial", 80));
+        emptyLabel.setTextFill(Color.web("#000000"));
+        return emptyLabel;
+    }
+
     /**
      * TitleLabels
      *
@@ -121,51 +130,54 @@ public class OPHelper {
         VBox submitted = new VBox();
 
         boolean sentEmpty = true, submittedEmpty = true;
-        Label emptyLabel = new Label("Empty");
-        emptyLabel.setMinWidth(400);
-        emptyLabel.setAlignment(Pos.CENTER);
-        emptyLabel.setFont(new Font("Arial", 80));
-        emptyLabel.setTextFill(Color.web("#000000"));
+        Label emptyLabel1 =emptyLabel();
+        Label emptyLabel2 =emptyLabel();
+        
+        if(orders.size() == 0){
 
-        for(int i=0; i<orders.size(); i++){
-            if(orders.get(i).getOrderState() == OrderState.RECEIVED || orders.get(i).getOrderState().chefCanAssign()){
-                sentEmpty = false;
-                HBox orderBox = new HBox();   
-                VBox orderBox1 = new VBox();
-                VBox orderBox2 = new VBox();
+        }
+        else{
+            for(int i=0; i<orders.size(); i++){
+                if(orders.get(i).getOrderState() == OrderState.RECEIVED || orders.get(i).getOrderState().chefCanAssign()){
+                    sentEmpty = false;
+                    HBox orderBox = new HBox();   
+                    VBox orderBox1 = new VBox();
+                    VBox orderBox2 = new VBox();
 
-                orderBox.setSpacing(30);
-                orderBox.setPadding(new Insets(30));
-                orderBox.setMinWidth(400);
+                    orderBox.setSpacing(30);
+                    orderBox.setPadding(new Insets(30));
+                    orderBox.setMinWidth(400);
 
-                orderBox1.getChildren().add(Order(i));
-                orderBox1.getChildren().add(PBarPlace(i));
-                orderBox2.getChildren().add(OrderStateRadios(orders.get(i)));
-                orderBox2.getChildren().add(DeleteButton(i));
-                orderBox.getChildren().addAll(orderBox1, orderBox2);
-                sent.getChildren().add(orderBox);
-            } else if(orders.get(i).getOrderState() == OrderState.DELIVERED || orders.get(i).getOrderState() == OrderState.PREPARED) {
-                submittedEmpty= false;
-                HBox orderBox = new HBox();   
-                orderBox.setSpacing(30);
-                orderBox.setPadding(new Insets(30));
-                orderBox.setMinWidth(420);
+                    orderBox1.getChildren().add(Order(i));
+                    orderBox1.getChildren().add(PBarPlace(i));
+                    orderBox2.getChildren().add(OrderStateRadios(orders.get(i)));
+                    orderBox2.getChildren().add(DeleteButton(i));
+                    orderBox.getChildren().addAll(orderBox1, orderBox2);
+                    sent.getChildren().add(orderBox);
+                } 
+                else if(orders.get(i).getOrderState() == OrderState.PREPARED || orders.get(i).getOrderState() == OrderState.DELIVERED) {
+                    submittedEmpty= false;
+                    HBox orderBox = new HBox();   
+                    orderBox.setSpacing(30);
+                    orderBox.setPadding(new Insets(30));
+                    orderBox.setMinWidth(420);
                 
-                orderBox.getChildren().add(Order(i));
-                orderBox.getChildren().add(SendButton(i));
+                    orderBox.getChildren().add(Order(i));
+                    orderBox.getChildren().add(SendButton(i));
 
 
-                submitted.getChildren().add(orderBox);
+                    submitted.getChildren().add(orderBox);
+                }
             }
         }
-        
+
         if (sentEmpty) {
-            sent.getChildren().add(emptyLabel);
+            sent.getChildren().add(emptyLabel1);
             sent.setMinWidth(400);
         }
 
         if (submittedEmpty) {
-            submitted.getChildren().add(emptyLabel);
+            submitted.getChildren().add(emptyLabel2);
             submitted.setMinWidth(400);
         }
 
