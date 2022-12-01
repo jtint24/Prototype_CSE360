@@ -6,7 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 
@@ -38,16 +41,17 @@ public class FoodItem implements Serializable {
      *         title
      * */
 
-    public Node graphic() {
+    public VBox graphic() {
         VBox retBox = new VBox();
 
         ImageView foodImageView = new ImageView(image.getImage());
         foodImageView.setFitHeight(100);
         foodImageView.setFitWidth(100);
 
-        retBox.getChildren().addAll(foodImageView, new Label(name+"   "+price));
-        retBox.setStyle("-fx-background-color: #850E35;");
-        // changed color to moroon , original :FFFFFF
+        Label graphicLabel = new Label(name+"   "+price);
+        graphicLabel.setTextFill(Color.BLACK);
+        retBox.getChildren().addAll(foodImageView, graphicLabel);
+        retBox.setStyle("-fx-background-color: #FFE657; "); //#850E35
         retBox.setPadding(new Insets(10));
         retBox.setSpacing(10);
 
@@ -61,11 +65,15 @@ public class FoodItem implements Serializable {
      * */
 
     public Button graphicButton(ShoppingCart mainShoppingCart) {
-        Button retButton = new Button("",graphic());
+        Button retButton = new Button();
+
+        retButton.setGraphic(graphic());
 
         retButton.setOnAction(actionEvent -> {
             mainShoppingCart.addItem(new OrderedItem(this));
         });
+
+        retButton.setStyle("-fx-border-style: none; -fx-border-width: 0; -fx-background-color: #FFE657; -fx-background-radius: 10");
 
         return retButton;
     }

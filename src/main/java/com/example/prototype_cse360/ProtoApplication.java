@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -118,22 +119,44 @@ public class ProtoApplication extends Application {
 
         for (FoodItem.Category category : FoodItem.Category.values()) {
             sortedHBoxes.put(category, new HBox());
+            sortedHBoxes.get(category).setStyle("-fx-background-color: #850E35");
+            sortedHBoxes.get(category).getChildren().add(Utils.spacer());
+
         }
         for (FoodItem foodItem : foodItems) {
             sortedHBoxes.get(foodItem.getCategory()).getChildren().add(foodItem.graphicButton(mainShoppingCart));
         }
         VBox foodItemsBox = new VBox();
+        foodItemsBox.setStyle("-fx-background-color: #850E35");
+       // foodItemsBox.setSpacing(20);
         for (FoodItem.Category category : FoodItem.Category.values()) {
             HBox hbox = sortedHBoxes.get(category);
             hbox.setSpacing(30);
-            hbox.setPadding(new Insets(30));
+            hbox.setPadding(new Insets(0));
 
-            foodItemsBox.getChildren().addAll(new Label(category.toString()), hbox);
+            Label categoryLabel = new Label("\n\t"+category.toString());
+            categoryLabel.setTextFill(Color.WHITE);
+
+            if (hbox.getChildren().size() > 3) {
+                ScrollPane scrollableHbox = new ScrollPane(hbox);
+                scrollableHbox.setFitToHeight(true);
+                scrollableHbox.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+                scrollableHbox.setPannable(false);
+                scrollableHbox.setPrefHeight(hbox.getMaxHeight());
+                scrollableHbox.setStyle("-fx-background-color: #850E35");
+
+                foodItemsBox.getChildren().addAll(categoryLabel, scrollableHbox);
+            } else {
+                foodItemsBox.getChildren().addAll(categoryLabel, hbox);
+            }
             // adjusting header text , add new object
         }
 
+        ScrollPane mainScroll = new ScrollPane(foodItemsBox);
+        mainScroll.setFitToWidth(true);
 
-        retBox.getChildren().add(new ScrollPane(foodItemsBox));
+
+        retBox.getChildren().add(mainScroll);
 
         HBox bottomNavigation = new HBox();
         Button nextButton = new Button("Next");
@@ -143,7 +166,6 @@ public class ProtoApplication extends Application {
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
 
         retBox.getChildren().add(bottomNavigation);
-
 
         return new Scene(retBox);
     }
