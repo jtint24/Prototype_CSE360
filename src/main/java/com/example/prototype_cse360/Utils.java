@@ -1,5 +1,7 @@
 package com.example.prototype_cse360;
 
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -38,6 +40,31 @@ public class Utils {
 
     public static HBox labelledTextBox(String name, TextField tf) {
         return  new HBox(new Label(name), tf);
+    }
+
+    /**
+     * makeCleanButton
+     * Makes a button formatted to fit the style of the UI
+     * @param n The node to put inside the button
+     * */
+    public static Button makeCleanButton(Node n) {
+        Button retButton = new Button();
+        retButton.setGraphic(n);
+        retButton.setStyle("-fx-border-style: none; -fx-border-width: 0; -fx-background-color: #FFE657; -fx-background-radius: 10");
+        return retButton;
+    }
+
+    /**
+     * makeCleanButton
+     *
+     * Makes a button formatted tto fit the style of the UI with plain text
+     *
+     * @param s The string to label the button with
+     * */
+    public static Button makeCleanButton(String s) {
+        Button retButton = new Button(s);
+        retButton.setStyle("-fx-border-style: none; -fx-border-width: 0; -fx-background-color: #FFE657; -fx-background-radius: 10");
+        return retButton;
     }
 
 

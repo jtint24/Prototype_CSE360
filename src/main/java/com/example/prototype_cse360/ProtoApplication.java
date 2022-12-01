@@ -62,9 +62,9 @@ public class ProtoApplication extends Application {
      * */
     public VBox mainPicker() {
         VBox retBox = new VBox();
-        Button chefButton = new Button("Chef");
-        Button orderManagerButton = new Button("Order Manager");
-        Button customerButton = new Button("Customer");
+        Button chefButton = Utils.makeCleanButton("Chef");
+        Button orderManagerButton = Utils.makeCleanButton("Order Manager");
+        Button customerButton = Utils.makeCleanButton("Customer");
 
         chefButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
         orderManagerButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
@@ -74,6 +74,7 @@ public class ProtoApplication extends Application {
 
         retBox.setPadding(new Insets(30));
         retBox.setSpacing(10);
+        retBox.setStyle("-fx-background-color: #850E35;");
         return retBox;
     }
 
@@ -191,9 +192,9 @@ public class ProtoApplication extends Application {
         availBox.setSpacing(20);
 
         HBox bottomNavigation = new HBox();
-        Button nextButton = new Button("Next");
+        Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
-        Button prevButton = new Button("Back");
+        Button prevButton = Utils.makeCleanButton("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(customerScene(mainShoppingCart));});
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
@@ -223,9 +224,9 @@ public class ProtoApplication extends Application {
         mainBox.getChildren().add(receiptGraphic());
 
         HBox bottomNavigation = new HBox();
-        Button nextButton = new Button("Next");
+        Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(paymentScene());});
-        Button prevButton = new Button("Back");
+        Button prevButton = Utils.makeCleanButton("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene(mainCart));});
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
@@ -269,7 +270,7 @@ public class ProtoApplication extends Application {
         );
 
         HBox bottomNavigation = new HBox();
-        Button nextButton = new Button("Next");
+        Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {
             errorLabel.setText("");
             if (nameField.getText().isBlank()) {
@@ -297,7 +298,7 @@ public class ProtoApplication extends Application {
             mainCart.setPaymentInformation(ccNumber.getText(), Integer.parseInt(securityCode.getText()), expDate.getText(), asuEmail.getText(), asuriteIDField.getText());
             mainCart.writeToFile();
         });
-        Button prevButton = new Button("Back");
+        Button prevButton = Utils.makeCleanButton("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
@@ -327,7 +328,7 @@ public class ProtoApplication extends Application {
     private Scene orderManagerScene() { 
         OPHelper ch = new OPHelper(orders);
         GridPane mainBox = new GridPane();
-        Button routingButton = new Button("To Chef");
+        Button routingButton = Utils.makeCleanButton("To Chef");
         routingButton.setOnAction(event -> {primaryStage.setScene(chefScene());});
 
         mainBox.setAlignment(Pos.CENTER);
