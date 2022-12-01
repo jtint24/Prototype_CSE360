@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 
@@ -31,7 +32,12 @@ public class OptionalMod extends FoodMod implements Serializable {
         activeBox.setOnAction(actionEvent -> {inEffect = !inEffect;});
         activeBox.setSelected(inEffect);
 
-        retBox.getChildren().addAll(Utils.spacer(), activeBox, new Label(name), Utils.spacer(), new Label(""+priceDifference));
+        Label nameLabel = new Label(name);
+        nameLabel.setTextFill(Color.WHITE);
+        Label priceLabel = new Label(""+priceDifference);
+        priceLabel.setTextFill(Color.WHITE);
+
+        retBox.getChildren().addAll(Utils.spacer(), activeBox, nameLabel, Utils.spacer(), priceLabel);
         return retBox;
     }
 

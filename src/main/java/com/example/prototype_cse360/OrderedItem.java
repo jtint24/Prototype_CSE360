@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.io.Serializable;
 
@@ -40,7 +41,12 @@ public class OrderedItem implements Serializable {
         foodImageView.setFitHeight(20);
         foodImageView.setFitWidth(20);
 
-        header.getChildren().addAll(foodImageView, Utils.spacer(), new Label(item.name), Utils.spacer(), new Label(""+item.price));
+        Label nameLabel = new Label(item.name);
+        nameLabel.setTextFill(Color.WHITE);
+        Label priceLabel = new Label(""+item.price);
+        priceLabel.setTextFill(Color.WHITE);
+
+        header.getChildren().addAll(foodImageView, Utils.spacer(), nameLabel, Utils.spacer(), priceLabel);
 
         retBox.getChildren().add(header);
 
@@ -65,19 +71,26 @@ public class OrderedItem implements Serializable {
         trashView.setFitWidth(20);
         trashView.setFitHeight(20);
 
-        Button deleteButton = new Button("",trashView);
+        Button deleteButton = Utils.makeCleanButton(trashView);
 
         deleteButton.setOnAction(actionEvent -> {mainShoppingCart.removeItem(this, mainApp);});
 
         Label headerLabel = new Label(item.name);
+        headerLabel.setTextFill(Color.WHITE);
+        Label priceLabel = new Label(item.price+"");
+        priceLabel.setTextFill(Color.WHITE);
 
-        HBox header = new HBox(deleteButton, headerLabel, Utils.spacer(), new Label(item.price+""));
+        HBox header = new HBox(deleteButton, headerLabel, Utils.spacer(), priceLabel);
 
         retBox.getChildren().add(header);
 
         for (FoodMod mod : mods) {
             if (mod.isInEffect()) {
-                HBox modEntry = new HBox(Utils.spacer(), Utils.spacer(), new Label(mod.getName()), Utils.spacer(), new Label(""+mod.getPriceDifference()));
+                Label modLabel = new Label(mod.getName());
+                Label modPriceLabel = new Label(mod.getPriceDifference()+"");
+                modLabel.setTextFill(Color.WHITE);
+                modPriceLabel.setTextFill(Color.WHITE);
+                HBox modEntry = new HBox(Utils.spacer(), Utils.spacer(), modLabel, Utils.spacer(), modPriceLabel);
                 retBox.getChildren().addAll(modEntry, Utils.spacer());
             }
         }

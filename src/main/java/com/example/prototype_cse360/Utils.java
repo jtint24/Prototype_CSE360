@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +40,9 @@ public class Utils {
      * */
 
     public static HBox labelledTextBox(String name, TextField tf) {
-        return  new HBox(new Label(name), tf);
+        Label nameLabel = new Label(name);
+        nameLabel.setTextFill(Color.WHITE);
+        return  new HBox(nameLabel, tf);
     }
 
     /**

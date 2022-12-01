@@ -33,6 +33,7 @@ public class RadioMods extends FoodMod implements Serializable {
 
         for (int i = 0; i<optionNames.length; i++) {
             RadioButton option = new RadioButton(optionNames[i] +"\t" + optionPriceDiffs[i]);
+            option.setStyle("-fx-text-fill: white");
             option.setToggleGroup(optionsGroup);
             if (i == currentSelection) {
                 option.setSelected(true);

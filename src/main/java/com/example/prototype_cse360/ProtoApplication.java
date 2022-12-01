@@ -92,7 +92,7 @@ public class ProtoApplication extends Application {
         GridPane mainBox = new GridPane();
 
         //Button for switching between the OPAgent and Chef scene during testing
-        Button routingButton = new Button("to OPAgent");
+        Button routingButton = Utils.makeCleanButton("to OPAgent");
         routingButton.setOnAction(event -> {primaryStage.setScene(orderManagerScene());});
 
         //Centers and makes the background maroon
@@ -160,11 +160,12 @@ public class ProtoApplication extends Application {
         retBox.getChildren().add(mainScroll);
 
         HBox bottomNavigation = new HBox();
-        Button nextButton = new Button("Next");
+        Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(modifierScene(mainCart));});
 
         bottomNavigation.getChildren().add(nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+        bottomNavigation.setStyle("-fx-background-color: #850E35;");
 
         retBox.getChildren().add(bottomNavigation);
 
@@ -179,9 +180,11 @@ public class ProtoApplication extends Application {
 
     private Scene modifierScene(ShoppingCart mainShoppingCart) {
         VBox availBox = new VBox();
+        availBox.setStyle("-fx-background-color: #850E35;");
 
-        Label headerLabel = new Label("Make Customizations!");
+        Label headerLabel = new Label("\tMake Customizations!\t");
         headerLabel.setTextAlignment(TextAlignment.CENTER);
+        headerLabel.setTextFill(Color.WHITE);
 
         availBox.getChildren().add(headerLabel);
 
@@ -192,13 +195,14 @@ public class ProtoApplication extends Application {
         availBox.setSpacing(20);
 
         HBox bottomNavigation = new HBox();
+        bottomNavigation.setStyle("-fx-background-color: #850E35;");
         Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(cartScene());});
         Button prevButton = Utils.makeCleanButton("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(customerScene(mainShoppingCart));});
 
-        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
-        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+        bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), Utils.spacer(), Utils.spacer(), nextButton);
+        bottomNavigation.setAlignment(Pos.BOTTOM_CENTER);
 
         availBox.getChildren().add(bottomNavigation);
 
@@ -215,8 +219,10 @@ public class ProtoApplication extends Application {
         updateReceiptGraphic();
 
         VBox mainBox = new VBox();
+        mainBox.setStyle("-fx-background-color: #850E35;");
 
         Label headerLabel = new Label("Here's Your Cart!");
+        headerLabel.setTextFill(Color.WHITE);
         headerLabel.setTextAlignment(TextAlignment.CENTER);
 
         mainBox.getChildren().add(headerLabel);
@@ -224,13 +230,14 @@ public class ProtoApplication extends Application {
         mainBox.getChildren().add(receiptGraphic());
 
         HBox bottomNavigation = new HBox();
+        bottomNavigation.setStyle("-fx-background-color: #850E35;");
         Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {primaryStage.setScene(paymentScene());});
         Button prevButton = Utils.makeCleanButton("Back");
         prevButton.setOnAction(event -> {primaryStage.setScene(modifierScene(mainCart));});
 
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
-        bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
+        bottomNavigation.setAlignment(Pos.BOTTOM_CENTER);
 
         mainBox.getChildren().add(bottomNavigation);
 
@@ -253,10 +260,14 @@ public class ProtoApplication extends Application {
 
         String errorString = "";
         Label errorLabel = new Label(errorString);
+        errorLabel.setStyle("-fx-background-color: #FFFFEE;");
         errorLabel.setStyle("-fx-text-fill: red");
 
+        Label paymentLabel = new Label("Please Enter Your Payment Info:");
+        paymentLabel.setTextFill(Color.WHITE);
+
         VBox mainBox = new VBox(
-                new Label("Please Enter Your Payment Info:"),
+                paymentLabel,
                 Utils.spacer(),
                 Utils.labelledTextBox("Name:", nameField),
                 Utils.labelledTextBox("ASU ID:", asuriteIDField),
@@ -270,6 +281,7 @@ public class ProtoApplication extends Application {
         );
 
         HBox bottomNavigation = new HBox();
+        bottomNavigation.setStyle("-fx-background-color: #850E35;");
         Button nextButton = Utils.makeCleanButton("Next");
         nextButton.setOnAction(event -> {
             errorLabel.setText("");
@@ -304,6 +316,8 @@ public class ProtoApplication extends Application {
         bottomNavigation.getChildren().addAll(prevButton, Utils.spacer(), Utils.spacer(), nextButton);
         bottomNavigation.setAlignment(Pos.BOTTOM_RIGHT);
 
+        mainBox.setStyle("-fx-background-color: #850E35;");
+
         mainBox.getChildren().add(bottomNavigation);
 
         return new Scene(mainBox);
@@ -316,7 +330,12 @@ public class ProtoApplication extends Application {
      * */
 
     private Scene okScene() {
-        return new Scene(new Label("Thank you! Your order is on the way!"));
+        Label mainLabel = new Label("Thank you! Your order is on the way!");
+        mainLabel.setStyle("-fx-text-fill: white");
+        VBox mainBox = new VBox(mainLabel);
+        mainBox.setStyle("-fx-background-color: #850E35;");
+        mainBox.setAlignment(Pos.CENTER);
+        return new Scene(mainBox);
     }
 
     /**
